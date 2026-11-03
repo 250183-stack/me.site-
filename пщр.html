@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoaLRush</title>
+
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('ChatGPT Image 29 сент. 2026 г., 18_13_44.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+
+        /* Шапка */
+        header {
+            background-color: #2b0a03;
+            padding: 20px;
+            text-align: center;
+        }
+
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+
+        nav {
+            margin-top: 15px;
+        }
+
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+
+        nav a:hover, nav a.active {
+            background-color: #5c180c;
+        }
+
+
+        .search {
+            margin-top: 20px;
+        }
+
+
+        .search input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+
+        .search button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .search button:hover {
+            background-color: #7a2010;
+        }
+
+
+        main {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 500px;
+        }
+
+
+        .page-section {
+            display: none;
+        }
+
+
+        .page-section.active {
+            display: block;
+        }
+
+
+        .section-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+
+        .league-group {
+            margin-bottom: 35px;
+        }
+
+
+        .league-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+
+        .back-button {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 16px;
+            background-color: #5c180c;
+            color: #fff;
+            border: 0;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        .squad-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+
+        .player-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+        }
+
+
+        .player-controls label {
+            display: grid;
+            gap: 6px;
+            color: #2b0a03;
+            font-weight: bold;
+        }
+
+
+        .player-controls select {
+            min-width: 220px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            font: inherit;
+        }
+
+
+        .player-controls select:disabled {
+            color: #777;
+            background: #eee;
+        }
+
+
+        .tournament-rating {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #e6d9d5;
+            cursor: default;
+        }
+
+
+        .tournament-rating-score {
+            margin: 0 0 10px;
+            color: #2b0a03;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+
+        .tournament-rating-control {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 8px;
+            max-width: 190px;
+            margin: 0 auto;
+        }
+
+
+        .tournament-rating-control label {
+            color: #2b0a03;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        .tournament-rating-value {
+            min-width: 4ch;
+            color: #5c180c;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: right;
+        }
+
+
+        .tournament-rating-slider {
+            grid-column: 2;
+            grid-row: 1;
+            width: 100%;
+            margin: 0;
+            appearance: none;
+            height: 7px;
+            border: 1px solid rgba(92, 24, 12, 0.18);
+            border-radius: 999px;
+            background: linear-gradient(90deg, #f3c35b 0%, #ef8c45 50%, #b52e27 100%);
+            box-shadow: inset 0 1px 2px rgba(43, 10, 3, 0.2);
+            cursor: pointer;
+        }
+
+
+        .tournament-rating-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 17px;
+            height: 17px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            background: #5c180c;
+            box-shadow: 0 1px 5px rgba(43, 10, 3, 0.45);
+        }
+
+
+        .tournament-rating-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            background: #5c180c;
+            box-shadow: 0 1px 5px rgba(43, 10, 3, 0.45);
+        }
+
+
+        .tournament-rating-slider:focus-visible {
+            outline: 2px solid #b52e27;
+            outline-offset: 4px;
+        }
+
+
+        .tournament-rating-scale {
+            grid-column: 2;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 10px;
+        }
+
+
+        #playerStatus,
+        .player-source {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.88);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+
+        .player-card {
+            position: relative;
+            font: inherit;
+            color: inherit;
+        }
+
+
+        .player-card:focus-visible {
+            outline: 3px solid #7a2010;
+            outline-offset: 3px;
+        }
+
+
+        .player-tooltip {
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            bottom: calc(100% - 5px);
+            width: max-content;
+            max-width: 240px;
+            padding: 9px 12px;
+            border-radius: 6px;
+            background: #2b0a03;
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.4;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 5px);
+            transition: opacity 0.15s, transform 0.15s;
+        }
+
+
+        .player-card:hover .player-tooltip,
+        .player-card:focus-visible .player-tooltip {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+
+        .player-profile-photo {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 12px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #f3e8e5;
+            color: #5c180c;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+
+        .player-profile-details {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 14px;
+        }
+
+
+        .player-profile-details dt {
+            font-weight: bold;
+        }
+
+
+        .player-profile-details dd {
+            margin: 0;
+        }
+
+
+        #infoModal .modal-content.player-info-modal {
+            max-width: 380px;
+        }
+
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+
+        .card h3 {
+            margin: 10px 0 5px;
+            color: #2b0a03;
+        }
+
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+
+
+        .imgsocial {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+        }
+
+
+        .click-hint {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+
+        /* Всплывающее окно (Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+
+        .close-btn:hover {
+            color: #5c180c;
+        }
+
+
+        .modal-title {
+            color: #2b0a03;
+            margin-top: 0;
+            border-bottom: 2px solid #5c180c;
+            padding-bottom: 10px;
+        }
+
+
+        .modal-body {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin-top: 15px;
+        }
+
+
+        #no-results {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #5c180c;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+
+
+        footer {
+            background-color: #2b0a03;
+            color: #fff;
+            text-align: center;
+            padding: 30px 15px 15px;
+            margin-top: 40px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            margin-left: -50vw;
+            margin-bottom: -30px;
+            box-sizing: border-box;
+        }
+
+
+        .subscription-form input[type="email"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+
+        .subscription-form button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .map-frame {
+            display: block;
+            width: min(100%, 600px);
+            height: 350px;
+            margin: 15px auto;
+            border: 0;
+            border-radius: 8px;
+        }
+
+
+        .footer-copyright {
+            border-top: 1px solid #5c180c;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+
+    <header id="top">
+        <a class="logo" onclick="showSection('home')">GoaLRush</a>
+        <nav>
+            <ul>
+                <li><a class="nav-link active" onclick="showSection('home')">Главная</a></li>
+                <li><a class="nav-link" onclick="showSection('clubs')">Футбольные Клубы</a></li>
+                <li><a class="nav-link" onclick="showSection('transfers')">Трансферы</a></li>
+                <li><a class="nav-link" onclick="showSection('tournaments')">Чемпионаты</a></li>
+                <li><a class="nav-link" onclick="showSection('players')">Футболисты</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск информации...">
+            <button id="searchBtn" type="button">Найти</button>
+        </div>
+    </header>
+
+
+    <main>
+        <!-- СЕКЦИЯ: Главная -->
+        <section id="home" class="page-section active">
+            <h1 class="section-title">Добро пожаловать на GoaLRush</h1>
+            <div class="cards-grid">
+                <div class="card" onclick="showSection('clubs')">
+                    <img src="i.webp" alt="Клубы">
+                    <h3>Футбольные Клубы</h3>
+                    <p>Обзоры и новости лучших клубов мира.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('transfers')">
+                    <img src="1images.jfif" alt="Трансферы">
+                    <h3>Трансферы</h3>
+                    <p>Свежие слухи и громкие переходы.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('tournaments')">
+                    <img src="01683078.webp" alt="Чемпионаты">
+                    <h3>Чемпионаты</h3>
+                    <p>Результаты и таблицы топовых лиг Европы.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('players')">
+                    <img src="2images.jfif" alt="Футболисты">
+                    <h3>Футболисты</h3>
+                    <p>Статистика и достижения звезд футбола.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Футбольные Клубы -->
+        <section id="clubs" class="page-section">
+            <h1 class="section-title">Футбольные Клубы</h1>
+            <div id="clubLeagues"></div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Трансферы -->
+        <section id="transfers" class="page-section">
+            <h1 class="section-title">Последние Трансферы</h1>
+            <div class="cards-grid">
+                <div class="card" onclick="openClubModal('Ферран Торрес', 'Барселона -> ПСЖ', 'Официально', 'Испанский вингер официально сменил клубную прописку и перешел в ПСЖ.')">
+                    <h3>Ферран Торрес</h3>
+                    <p>Перешел в ПСЖ</p>
+                    <span class="click-hint">Детали трансфера &rarr;</span>
+                </div>
+                <div class="card" onclick="openClubModal('Мохаммед Салах', 'Ливерпуль', 'Слухи', 'Саудовские клубы готовят крупное предложение по форварду.')">
+                    <h3>Мохаммед Салах</h3>
+                    <p>Слухи в Саудовскую Аравию</p>
+                    <span class="click-hint">Детали трансфера &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Чемпионаты -->
+        <section id="tournaments" class="page-section">
+            <h1 class="section-title">Чемпионаты</h1>
+            <div id="tournamentLeagueList">
+                <div class="cards-grid" id="tournamentLeagueCards"></div>
+            </div>
+            <div id="tournamentClubList" hidden>
+                <button class="back-button" id="backToLeagues" type="button">← Все лиги</button>
+                <h2 class="league-title" id="selectedLeagueTitle"></h2>
+                <div class="cards-grid" id="tournamentClubCards"></div>
+            </div>
+            <div class="cards-grid">
+                <div class="card" id="championsLeagueCard" onclick="openClubModal('Лига Чемпионов УЕФА', 'Европа', 'Новый формат', 'Главный клубный турнир Европы с обновленным швейцарским форматом.')">
+                    <h3>Лига Чемпионов</h3>
+                    <p>Главный турнир Европы</p>
+                    <span class="click-hint">О турнире &rarr;</span>
+                    <div class="tournament-rating" data-tournament-rating="champions-league"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Футболисты -->
+        <section id="players" class="page-section">
+            <h1 class="section-title">Футболисты</h1>
+            <div class="player-controls">
+                <label for="playerLeague">Лига сезона 2026/27
+                    <select id="playerLeague">
+                        <option value="">Выберите лигу</option>
+                    </select>
+                </label>
+                <label for="playerTeam">Клуб
+                    <select id="playerTeam" disabled>
+                        <option value="">Сначала выберите лигу</option>
+                    </select>
+                </label>
+            </div>
+            <p id="playerStatus" role="status" aria-live="polite">Выберите лигу и клуб, чтобы посмотреть офлайн-состав сезона 2026/27.</p>
+            <div class="cards-grid" id="playerCards"></div>
+            <p class="player-source">Составы сохранены на устройстве и доступны без API. Наведите курсор на игрока для краткой подсказки, нажмите на карточку для подробностей. Источник данных: <a href="https://www.espn.com/soccer/" target="_blank" rel="noopener noreferrer">ESPN</a>, данные на 29 октября 2026 года.</p>
+        </section>
+
+
+        <div id="no-results">По вашему запросу ничего не найдено</div>
+    </main>
+
+
+    <footer>
+        <div class="subscription-form">
+            <p><strong>Все свежие новости всегда у нас:</strong></p>
+            <p><strong>Следите за нашими новостями:</strong></p>
+            <form onsubmit="event.preventDefault();">
+                <input type="email" placeholder="Введите ваш email" required>
+                <button type="submit">Подписаться</button>
+            </form>
+        </div>
+        <iframe
+            class="map-frame"
+            title="Карта Google Maps"
+            src="https://maps.google.com/maps?q=43.237909525416015%2C76.940123048329&amp;z=15&amp;output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+        </iframe>
+        <p><strong>Number: -87472306823</strong></p>
+
+
+        <div class="social-links">
+            <a class="imgsocial" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="858.png" alt="YouTube">
+            </a>
+            <a class="imgsocial" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="3322.jfif" alt="Instagram">
+            </a>
+            <a class="imgsocial" href="https://web.telegram.org/a/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="3223.jfif" alt="Telegram">
+            </a>
+            <a class="imgsocial" href="https://api.whatsapp.com/send?phone=87472306823" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="233.png" alt="WhatsApp">
+            </a>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 GoaLRush. Все права защищены.</p>
+        </div>
+    </footer>
+
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКОШКО -->
+    <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" class="modal-title">Заголовок</h2>
+            <div id="modalBody" class="modal-body">Текст...</div>
+        </div>
+    </div>
+
+
+    <button id="backToTop" title="Наверх" onclick="topFunction()">&#8679;</button>
+
+
+    <script src="players-data.js"></script>
+    <script>
+        // Функция открывания плашек без ошибок с кавычками
+        function openClubModal(title, country, stadium, description, squadUrl) {
+            document.getElementById('modalTitle').innerText = title;
+            document.querySelector('#infoModal .modal-content').classList.remove('player-info-modal');
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = '';
+
+
+            [
+                ['Страна / Клуб:', country],
+                ['Стадион / Статус:', stadium],
+                ['Описание:', description]
+            ].forEach(([label, value]) => {
+                const paragraph = document.createElement('p');
+                const strong = document.createElement('strong');
+                strong.textContent = `${label} `;
+                paragraph.append(strong, document.createTextNode(value));
+                modalBody.appendChild(paragraph);
+            });
+
+
+            if (squadUrl) {
+                const link = document.createElement('a');
+                link.className = 'squad-link';
+                link.href = squadUrl;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Найти состав сезона 2026/27 (выберите официальный сайт клуба)';
+                modalBody.appendChild(link);
+            }
+
+
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+            document.querySelector('#infoModal .modal-content').classList.remove('player-info-modal');
+        }
+
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+
+        // Переключение меню
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.page-section');
+            const targetSection = document.getElementById(sectionId);
+
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            if (!targetSection || !targetSection.classList.contains('page-section')) {
+                return;
+            }
+
+
+            sections.forEach(section => {
+                section.classList.toggle('active', section === targetSection);
+                section.querySelectorAll('.card').forEach(card => {
+                    card.style.display = '';
+                });
+            });
+
+
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('onclick') === `showSection('${sectionId}')`);
+            });
+
+
+            document.getElementById('searchInput').value = '';
+            document.getElementById('no-results').style.display = 'none';
+            if (sectionId === 'tournaments') {
+                document.getElementById('tournamentClubList').hidden = true;
+                document.getElementById('tournamentLeagueList').hidden = false;
+            }
+            if (sectionId === 'players' && !playerLeagueSelect.value) {
+                playerLeagueSelect.value = 'eng.1';
+                loadPlayerTeams();
+            }
+            closeModal();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        const clubLeagues = GOALRUSH_PLAYER_DATA.leagues.map(league => ({
+            id: league.Id,
+            country: league.Country,
+            league: league.Label,
+            clubs: GOALRUSH_PLAYER_DATA.clubs
+                .filter(club => club.leagueId === league.Id)
+                .map(club => club.name)
+        }));
+        const playerLeagueSelect = document.getElementById('playerLeague');
+        const playerTeamSelect = document.getElementById('playerTeam');
+        const playerCards = document.getElementById('playerCards');
+        const playerStatus = document.getElementById('playerStatus');
+        const playerLeagueData = GOALRUSH_PLAYER_DATA.leagues;
+
+
+        function setPlayerStatus(message) {
+            playerStatus.textContent = message;
+        }
+
+
+        function getPlayerPosition(position) {
+            const labels = {
+                Goalkeeper: 'Вратарь',
+                Defender: 'Защитник',
+                Midfielder: 'Полузащитник',
+                Forward: 'Нападающий'
+            };
+            return labels[position] || position || 'Нет данных';
+        }
+
+
+        function formatPlayerAge(age) {
+            if (!age) {
+                return '';
+            }
+            const lastTwoDigits = age % 100;
+            const lastDigit = age % 10;
+            const unit = lastTwoDigits >= 11 && lastTwoDigits <= 14
+                ? 'лет'
+                : lastDigit === 1
+                    ? 'год'
+                    : lastDigit >= 2 && lastDigit <= 4
+                        ? 'года'
+                        : 'лет';
+            return `${age} ${unit}`;
+        }
+
+
+        function replaceSelectOptions(select, placeholder, items) {
+            select.replaceChildren();
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = placeholder;
+            select.appendChild(defaultOption);
+
+            items.forEach(({ value, label }) => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = label;
+                select.appendChild(option);
+            });
+        }
+
+
+        function loadPlayerTeams() {
+            const leagueId = playerLeagueSelect.value;
+            playerCards.replaceChildren();
+
+            if (!leagueId) {
+                playerTeamSelect.disabled = true;
+                replaceSelectOptions(playerTeamSelect, 'Сначала выберите лигу', []);
+                setPlayerStatus('Выберите лигу и клуб, чтобы посмотреть офлайн-состав сезона 2026/27.');
+                return;
+            }
+
+            const teams = GOALRUSH_PLAYER_DATA.clubs
+                .filter(club => club.leagueId === leagueId)
+                .map(club => ({ value: club.id, label: club.name }));
+            replaceSelectOptions(playerTeamSelect, 'Выберите клуб', teams);
+            playerTeamSelect.disabled = teams.length === 0;
+            setPlayerStatus(`${teams.length} клубов. Выберите клуб, чтобы открыть его состав.`);
+        }
+
+
+        function loadPlayerRoster() {
+            const teamId = playerTeamSelect.value;
+            playerCards.replaceChildren();
+
+            if (!teamId) {
+                return;
+            }
+
+            const club = GOALRUSH_PLAYER_DATA.clubs.find(item => item.id === teamId);
+            if (!club || !Array.isArray(club.players) || club.players.length !== 15) {
+                setPlayerStatus('В сохранённых данных для клуба нет полного списка из 15 игроков.');
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            club.players.forEach(player => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'card player-card';
+                card.setAttribute('aria-label', `${player.name}, ${getPlayerPosition(player.position)}. Нажмите для подробностей.`);
+
+                const name = document.createElement('h3');
+                name.textContent = player.name;
+                card.appendChild(name);
+
+                const details = document.createElement('p');
+                details.textContent = [getPlayerPosition(player.position), player.number ? `№ ${player.number}` : '']
+                    .filter(Boolean)
+                    .join(' • ');
+                card.appendChild(details);
+
+                const tooltip = document.createElement('span');
+                tooltip.className = 'player-tooltip';
+                tooltip.textContent = [getPlayerPosition(player.position), formatPlayerAge(player.age), player.nationality]
+                    .filter(Boolean)
+                    .join(' • ');
+                card.appendChild(tooltip);
+
+                card.addEventListener('click', () => openPlayerModal(player, club));
+                fragment.appendChild(card);
+            });
+
+            playerCards.appendChild(fragment);
+            setPlayerStatus(`${club.name}: показаны 15 футболистов. Наведите курсор или нажмите на карточку для подробностей.`);
+        }
+
+
+        function openPlayerModal(player, club) {
+            document.getElementById('modalTitle').textContent = player.name;
+            document.querySelector('#infoModal .modal-content').classList.add('player-info-modal');
+            const modalBody = document.getElementById('modalBody');
+            const details = document.createElement('dl');
+            details.className = 'player-profile-details';
+
+            [
+                ['Клуб', club.name],
+                ['Лига', `${club.league} — ${club.country}`],
+                ['Позиция', getPlayerPosition(player.position)],
+                ['Номер', player.number ? `№ ${player.number}` : 'Нет данных'],
+                ['Возраст', formatPlayerAge(player.age) || 'Нет данных'],
+                ['Гражданство', player.nationality || 'Нет данных']
+            ].forEach(([label, value]) => {
+                const term = document.createElement('dt');
+                term.textContent = label;
+                const description = document.createElement('dd');
+                description.textContent = value;
+                details.append(term, description);
+            });
+
+            modalBody.replaceChildren(details);
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+
+        playerLeagueSelect.addEventListener('change', loadPlayerTeams);
+        playerTeamSelect.addEventListener('change', loadPlayerRoster);
+        replaceSelectOptions(
+            playerLeagueSelect,
+            'Выберите лигу',
+            playerLeagueData.map(league => ({
+                value: league.Id,
+                label: `${league.Country} — ${league.Label}`
+            }))
+        );
+
+
+        function renderClubLeagues() {
+            const container = document.getElementById('clubLeagues');
+            const fragment = document.createDocumentFragment();
+
+
+            clubLeagues.forEach(({ country, league, clubs }) => {
+                const group = document.createElement('div');
+                group.className = 'league-group';
+
+
+                const heading = document.createElement('h2');
+                heading.className = 'league-title';
+                heading.textContent = `${league} — ${country}`;
+                group.appendChild(heading);
+
+
+                const grid = document.createElement('div');
+                grid.className = 'cards-grid';
+
+
+                clubs.forEach(clubName => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+
+                    const title = document.createElement('h3');
+                    title.textContent = clubName;
+                    card.appendChild(title);
+
+
+                    const leagueLabel = document.createElement('p');
+                    leagueLabel.textContent = `${league} • ${country}`;
+                    card.appendChild(leagueLabel);
+
+
+                    const hint = document.createElement('span');
+                    hint.className = 'click-hint';
+                    hint.textContent = 'Открыть информацию →';
+                    card.appendChild(hint);
+
+
+                    card.addEventListener('click', () => {
+                        openClubModal(
+                            clubName,
+                            country,
+                            `Лига: ${league}`,
+                            `${clubName} — футбольный клуб из страны ${country}, выступающий в лиге ${league}.`
+                        );
+                    });
+
+
+                    grid.appendChild(card);
+                });
+
+
+                group.appendChild(grid);
+                fragment.appendChild(group);
+            });
+
+
+            container.appendChild(fragment);
+        }
+
+
+        const tournamentRatingsStorageKey = 'goalrush-tournament-scores';
+        let tournamentRatings = {};
+
+
+        try {
+            const savedRatings = localStorage.getItem(tournamentRatingsStorageKey);
+            if (savedRatings) {
+                const parsedRatings = JSON.parse(savedRatings);
+                if (parsedRatings && typeof parsedRatings === 'object' && !Array.isArray(parsedRatings)) {
+                    tournamentRatings = parsedRatings;
+                } else {
+                    console.error('Сохранённые оценки чемпионатов имеют неверный формат.');
+                }
+            }
+        } catch (error) {
+            console.error('Не удалось загрузить сохранённые оценки чемпионатов.', error);
+        }
+
+
+        function getTournamentAverage(rating) {
+            const total = Number.isFinite(rating?.total) && rating.total >= 0 ? rating.total : 0;
+            const count = Number.isSafeInteger(rating?.count) && rating.count > 0 ? rating.count : 0;
+            return count === 0 ? null : Math.round(total / count);
+        }
+
+
+        function getRatingCountLabel(count) {
+            const lastTwoDigits = count % 100;
+            const lastDigit = count % 10;
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+                return 'оценок';
+            }
+            if (lastDigit === 1) {
+                return 'оценка';
+            }
+            return lastDigit >= 2 && lastDigit <= 4 ? 'оценки' : 'оценок';
+        }
+
+
+        function createTournamentRating(container, tournamentId) {
+            const panel = container.matches('.tournament-rating')
+                ? container
+                : document.createElement('div');
+            panel.classList.add('tournament-rating');
+            panel.setAttribute('aria-label', 'Средняя оценка чемпионата');
+            panel.addEventListener('click', event => event.stopPropagation());
+
+            const score = document.createElement('p');
+            score.className = 'tournament-rating-score';
+            score.setAttribute('aria-live', 'polite');
+
+            const control = document.createElement('div');
+            control.className = 'tournament-rating-control';
+
+            const label = document.createElement('label');
+            label.textContent = 'Ваша оценка';
+
+            const value = document.createElement('output');
+            value.className = 'tournament-rating-value';
+
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.className = 'tournament-rating-slider';
+            slider.min = '0';
+            slider.max = '100';
+            slider.step = '1';
+            slider.setAttribute('aria-label', 'Ваша оценка чемпионата от 0 до 100');
+            label.htmlFor = `tournament-rating-${tournamentId.replace(/[^a-z0-9_-]/gi, '-')}`;
+            slider.id = label.htmlFor;
+
+            const scale = document.createElement('div');
+            scale.className = 'tournament-rating-scale';
+            const minimum = document.createElement('span');
+            minimum.textContent = '0';
+            const maximum = document.createElement('span');
+            maximum.textContent = '100';
+            scale.append(minimum, maximum);
+
+            control.append(label, value, slider, scale);
+            panel.replaceChildren(score, control);
+
+            function updatePanel(previewValue) {
+                const stored = tournamentRatings[tournamentId];
+                const rating = stored && typeof stored === 'object' ? stored : {};
+                const average = getTournamentAverage(rating);
+                const userRating = Number.isInteger(rating.userRating)
+                    && rating.userRating >= 0
+                    && rating.userRating <= 100
+                    ? rating.userRating
+                    : 50;
+                const selectedValue = previewValue ?? userRating;
+
+                score.textContent = average === null
+                    ? 'Средняя оценка: пока нет оценок'
+                    : `Средняя оценка: ${average}/100 (${rating.count} ${getRatingCountLabel(rating.count)})`;
+                slider.value = String(selectedValue);
+                value.value = `${selectedValue}/100`;
+                value.textContent = `${selectedValue}/100`;
+            }
+
+            function saveRating() {
+                const previous = tournamentRatings[tournamentId];
+                const current = previous && typeof previous === 'object'
+                    ? { ...previous }
+                    : { total: 0, count: 0, userRating: null };
+                const oldUserRating = Number.isInteger(current.userRating)
+                    && current.userRating >= 0
+                    && current.userRating <= 100
+                    ? current.userRating
+                    : null;
+                const newUserRating = Number(slider.value);
+
+                if (oldUserRating === null) {
+                    current.total = (Number.isFinite(current.total) && current.total >= 0 ? current.total : 0)
+                        + newUserRating;
+                    current.count = (Number.isSafeInteger(current.count) && current.count >= 0 ? current.count : 0)
+                        + 1;
+                } else {
+                    current.total = Math.max(
+                        0,
+                        (Number.isFinite(current.total) && current.total >= oldUserRating
+                            ? current.total
+                            : oldUserRating) - oldUserRating + newUserRating
+                    );
+                }
+                current.userRating = newUserRating;
+                tournamentRatings[tournamentId] = current;
+
+                try {
+                    localStorage.setItem(tournamentRatingsStorageKey, JSON.stringify(tournamentRatings));
+                } catch (error) {
+                    console.error('Не удалось сохранить рейтинг чемпионата в браузере.', error);
+                    score.textContent = 'Не удалось сохранить оценку на этом устройстве.';
+                    return;
+                }
+                updatePanel();
+            }
+
+            slider.addEventListener('input', () => updatePanel(Number(slider.value)));
+            slider.addEventListener('change', saveRating);
+            updatePanel();
+
+            if (panel !== container) {
+                container.appendChild(panel);
+            }
+            return panel;
+        }
+
+
+        function renderTournamentLeagues() {
+            const leagueCards = document.getElementById('tournamentLeagueCards');
+            const clubCards = document.getElementById('tournamentClubCards');
+            const leagueList = document.getElementById('tournamentLeagueList');
+            const clubList = document.getElementById('tournamentClubList');
+            const selectedLeagueTitle = document.getElementById('selectedLeagueTitle');
+
+
+            clubLeagues.forEach(leagueData => {
+                const leagueCard = document.createElement('div');
+                leagueCard.className = 'card';
+
+
+                const title = document.createElement('h3');
+                title.textContent = leagueData.league;
+                leagueCard.appendChild(title);
+
+
+                const country = document.createElement('p');
+                country.textContent = leagueData.country;
+                leagueCard.appendChild(country);
+
+
+                const hint = document.createElement('span');
+                hint.className = 'click-hint';
+                hint.textContent = 'Посмотреть клубы →';
+                leagueCard.appendChild(hint);
+                createTournamentRating(leagueCard, `league:${leagueData.id}`);
+
+                leagueCard.addEventListener('click', () => {
+                    selectedLeagueTitle.textContent = `${leagueData.league} — ${leagueData.country}`;
+                    clubCards.replaceChildren();
+
+
+                    leagueData.clubs.forEach(clubName => {
+                        const clubCard = document.createElement('div');
+                        clubCard.className = 'card';
+
+
+                        const clubTitle = document.createElement('h3');
+                        clubTitle.textContent = clubName;
+                        clubCard.appendChild(clubTitle);
+
+
+                        const leagueLabel = document.createElement('p');
+                        leagueLabel.textContent = `${leagueData.league} • ${leagueData.country}`;
+                        clubCard.appendChild(leagueLabel);
+
+
+                        const hint = document.createElement('span');
+                        hint.className = 'click-hint';
+                        hint.textContent = 'Информация и состав →';
+                        clubCard.appendChild(hint);
+
+
+                        clubCard.addEventListener('click', () => {
+                            const searchQuery = `${clubName} ${leagueData.league} official squad 2026/27`;
+                            const squadUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                            openClubModal(
+                                clubName,
+                                leagueData.country,
+                                `Лига: ${leagueData.league}`,
+                                `${clubName} выступает в лиге ${leagueData.league}. Составы на сезон 2026/27 смотрите на официальном сайте клуба.`,
+                                squadUrl
+                            );
+                        });
+
+
+                        clubCards.appendChild(clubCard);
+                    });
+
+
+                    leagueList.hidden = true;
+                    clubList.hidden = false;
+                });
+
+
+                leagueCards.appendChild(leagueCard);
+            });
+
+
+            document.getElementById('backToLeagues').addEventListener('click', () => {
+                clubList.hidden = true;
+                leagueList.hidden = false;
+            });
+
+            createTournamentRating(
+                document.querySelector('[data-tournament-rating="champions-league"]'),
+                'champions-league'
+            );
+        }
+
+
+        renderClubLeagues();
+        renderTournamentLeagues();
+        showSection('players');
+
+
+        // Поиск
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const noResults = document.getElementById('no-results');
+            let matchesFound = false;
+
+
+            if (query === '') {
+                showSection('home');
+                return;
+            }
+
+
+            document.querySelectorAll('.page-section').forEach(section => {
+                let sectionHasMatches = false;
+                section.querySelectorAll('.card').forEach(card => {
+                    const matches = card.textContent.toLowerCase().includes(query);
+                    card.style.display = matches ? '' : 'none';
+                    sectionHasMatches = sectionHasMatches || matches;
+                });
+                section.classList.toggle('active', sectionHasMatches);
+                matchesFound = matchesFound || sectionHasMatches;
+            });
+
+
+            noResults.style.display = matchesFound ? 'none' : 'block';
+        }
+
+
+        searchInput.addEventListener('keyup', performSearch);
+        searchBtn.addEventListener('click', performSearch);
+
+
+        // Кнопка наверх
+        const mybutton = document.getElementById("backToTop");
+        window.onscroll = function() {
+            mybutton.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "flex" : "none";
+        };
+
+
+        function topFunction() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
