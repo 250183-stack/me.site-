@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoaLRush</title>
+
+    <style>
+        /* CSS для плавного скролла */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Шапка */
+        header {
+            background-color: #2b0a03;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        /* Навигация */
+        nav {
+            margin-top: 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #5c180c;
+        }
+
+        /* Поиск */
+        .search {
+            margin-top: 20px;
+        }
+
+        .search input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search button:hover {
+            background-color: #7a2010;
+        }
+
+        /* Контент */
+        main {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
+
+        /* Управление отображением секций */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2b0a03;
+            margin-bottom: 25px;
+        }
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+            color: #2b0a03;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+        .imgsocial {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+        }
+
+        /* Уведомление для поиска */
+        #no-results {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 40px;
+        }
+
+        /* Кнопка "Наверх" */
+        #backToTop {
+            display: none; /* Скрыта по умолчанию */
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #5c180c;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+
+        #backToTop:hover {
+            background-color: #7a2010;
+            transform: translateY(-3px);
+        }
+
+        /* Единый подвал (красно-темный) */
+       footer {
+    background-color: #2b0a03;
+    color: #fff;
+    text-align: center;
+    padding: 30px 15px 15px;
+    margin-top: 40px;
+
+    /* --- ДОБАВЛЕННЫЕ СВОЙСТВА DЛЯ РАСТЯГИВАНИЯ ПО БОКАМ --- */
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-bottom: -30px; /* Убирает отступ снизу от main */
+    box-sizing: border-box;
+}
+body {
+    background-image: url('ChatGPT Image 29 сент. 2026 г., 18_13_44.png');
+    background-repeat: no-repeat; /* Чтобы картинка не повторялась плиточкой */
+    background-size: cover;      /* Чтобы картинка растягивалась на весь экран */
+    background-position: center; /* Центрирование изображения */
+}
+.whatsapp-button {
+  background-color: chartreuse; /* Задаем цвет фона кнопки */
+  color: #fff; /* Устанавливаем белый цвет текста */
+  width: 100px; /* Задаем начальную ширину кнопки 100px */
+  height: 100px; /* Устанавливаем высоту кнопки 100px */
+  border-radius: 10px; /* Скругляем углы кнопки с радиусом 10px */
+  padding: 10px; /* Добавляем внутренние отступы по 10px */
+  margin: 10px; /* Добавляем внешние отступы по 10px */
+  text-align: center; /* Выравниваем текст по центру внутри кнопки */
+  font-weight: bold; /* Делаем текст жирным */
+}
+
+.whatsapp-block {
+  position: fixed; /* Устанавливаем фиксированное позиционирование для блока */
+  bottom: 60px; /* Располагаем блок внизу на расстоянии 20px от нижнего края экрана */
+  right: 70px; /* Располагаем блок справа на расстоянии 20px от правого края экрана */
+  z-index: 1000; /* Задаем высокий приоритет по оси Z для перекрытия других элементов страницы */
+}
+
+    </style>
+</head>
+<body>
+
+    <header id="top">
+        <a href="#" class="logo" onclick="showSection('home')">GoaLRush</a>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" onclick="showSection('home')">Главная</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('clubs')">Футбольные Клубы</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('transfers')">Трансферы</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('tournaments')">Чемпионаты</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('players')">Футболисты</a></li>
+               
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск информации...">
+            <button id="searchBtn" type="button">Найти</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- СЕКЦИЯ: Главная -->
+        <section id="home" class="page-section active">
+        
+            <div class="cards-grid">
+            <div class="card">
+              
+                
+                    <img src="i.webp" alt="Клубы">
+                    <h3>Футбольные Клубы</h3>
+                    <p>Обзоры и новости лучших футбольных клубов мира.</p>
+                </div>
+                <div class="card">
+                    <img src="1images.jfif" alt="Трансферы">
+                    <h3>Трансферы</h3>
+                    <p>Свежие слухи и громкие переходы игроков.</p>
+                </div>
+                <div class="card">
+                    <img src="01683078.webp" alt="Чемпионаты">
+                    <h3>Чемпионаты</h3>
+                    <p>Результаты и таблицы топовых лиг Европы и мира.</p>
+                </div>
+                <div class="card">
+                    <img src="2images.jfif" alt="Футболисты">
+                    <h3>Футболисты</h3>
+                    <p>Статистика, профили и достижения звезд футбола.</p>
+                </div>
+                <div class="card">
+                    <img src="000.jpeg" alt="Футболисты">
+                    <h3>Золотой мяч</h3>
+                    <p>Главный приз FIFA.Кто получит?</p>
+                </div>
+            </div>
+   
+
+
+        </section>
+
+        <!-- СЕКЦИЯ: Футбольные Клубы -->
+        <section id="clubs" class="page-section">
+            <h1 class="section-title">Футбольные Клубы</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Реал Мадрид</h3>
+                    <p>Страна: Испания</p>
+                    <p>15-кратные обладатели кубка Лиги Чемпионов.</p>
+                </div>
+                <div class="card">
+                    <h3>Манчестер Сити</h3>
+                    <p>Страна: Англия</p>
+                    <p>Прошлые чемпионы Английской Премьер-лиги.</p>
+                </div>
+                <div class="card">
+                    <h3>Бавария Мюнхен</h3>
+                    <p>Страна: Германия</p>
+                    <p>Гранд немецкого футбола и гегемон Бундеслиги.</p>
+                </div>
+                       <div class="card">
+                    <h3>Милан</h3>
+                    <p>Страна: Италия</p>
+                    <p>Одни из самых главных притиндетов на Серию А.</p>
+                </div>
+                       <div class="card">
+                    <h3>PSG</h3>
+                    <p>Страна: Франция</p>
+                    <p>Прошлые чемпионы Французской Лиги.Двух кратнее победитиле ЛЧ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Трансферы -->
+        <section id="transfers" class="page-section">
+            <h1 class="section-title">Последние Трансферы</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Феран Торрес</h3>
+                    <p>Перешел в клуб "PSG".</p>
+                </div>
+                <div class="card">
+                    <h3>Слухи: Салах</h3>
+                    <p>Саудовские клубы готовят новое предложение по форварду.</p>
+                </div>
+                 <div class="card">
+                    <h3>Демференс</h3>
+                    <p>Перешел в Реал Мадрид за 20 миллионов евро.</p>
+                </div>
+                 <div class="card">
+                    <h3>Родри</h3>
+                    <p>Перешел в барсилону после фантастического выступление на ЧМ.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Чемпионаты -->
+        <section id="tournaments" class="page-section">
+            <h1 class="section-title">Чемпионаты и Турниры</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Лига Чемпионов УЕФА</h3>
+                    <p>Главный клубный турнир Европы с обновленным форматом.</p>
+                </div>
+                <div class="card">
+                    <h3>Английская Премьер-лига</h3>
+                    <p>Самая зрелищная и богатая лига планеты.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Футболисты -->
+        <section id="players" class="page-section">
+            <h1 class="section-title">Топовые Футболисты</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Лионель Месси</h3>
+                    <p>Клуб: Интер Майами</p>
+                    <p>Восьмикратный обладатель «Золотого мяча л».</p>
+                </div>
+                <div class="card">
+                    <h3>Криштиану Роналду</h3>
+                    <p>Клуб: Аль-Наср</p>
+                    <p>Лучший бомбардир в истории официальных матчей.
+                        Величайщий футболист современности, обладатель 5 «Золотых мячей».</p>
+                </div>
+    </section>
+
+        <div id="no-results">По вашему запросу ничего не найдено</div>
+    </main>
+
+    <!-- Кнопка перехода Наверх -->
+    <button id="backToTop" title="Наверх" onclick="topFunction()">&#8679;</button>
+
+    <!-- Подвал (Footer) -->
+<footer>
+                <div class="subscription-form">
+                    <p><strong>Все свежие новости всегда у нас:</strong></p>
+                    <p><strong>Следите за нашими новостями:</strong></p>
+                    <form>
+                        <input type="email" placeholder="Введите ваш email" required>
+                        <button type="submit">Подписаться</button>
+                    </form>
+                    <p><strong>Number: -87472306823</strong></p>
+                </div>
+                <div class="social-links"> <!-- Блок для социальных сетей -->
+  <a class="imgsocial" href="https://www.youtube.com/" target="_blank"> <!-- Ссылка на YouTube -->
+    <img class="imgsocial" src="858.png" alt="YouTube" class="social-icon"> <!-- Иконка YouTube -->
+  </a>
+  <a class="imgsocial" href="https://www.instagram.com/" target="_blank"> <!-- Ссылка на Instagram -->
+    <img class="imgsocial" src="3322.jfif" alt="Instagram" class="social-icon"> <!-- Иконка Instagram -->
+  </a>
+  <a class="imgsocial" href="https://web.telegram.org/a/" target="_blank"> <!-- Ссылка на Telegram -->
+    <img class="imgsocial" src="3223.jfif" alt="Telegram" class="social-icon"> <!-- Иконка Telegram -->
+  </a>
+<a class="imgsocial" href="https://api.whatsapp.com/send?phone=87472306823">
+    <img class="imgsocial" src="233.png" alt="WhatsApp" class="social-icon"> <!-- Иконка WhatsApp -->
+</a>
+</div>
+       
+                <div class="footer-copyright">
+                    <p>&copy; 2026 GoaLRush. Все права защищены.</p>
+                </div>
+            </footer>
+
+    <script>
+    
+
+        // Поиск по всем карточкам на сайте
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('no-results');
+            let matchesFound = false;
+
+            if (query === '') {
+                showSection('home');
+                return;
+            }
+
+            // Показываем все разделы, чтобы отфильтровать их карточки
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('active'));
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    matchesFound = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (matchesFound) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        }
+
+        searchInput.addEventListener('keyup', performSearch);
+        searchBtn.addEventListener('click', performSearch);
+
+        // --- ЛОГИКА КНОПКИ "НАВЕРХ" ---
+        const mybutton = document.getElementById("backToTop");
+
+        // Отслеживание скролла страницы
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                mybutton.style.display = "flex";
+            } else {
+                mybutton.style.display = "none";
+            }
+        };
+
+        // Плавная прокрутка наверх при клике
+        function topFunction() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        const whatsappButton = document.querySelector('.whatsapp-button'); // Получаем элемент кнопки с классом 'whatsapp-button'
+
+function changeButtonSize() { // Функция, изменяющая размер кнопки
+  whatsappButton.style.transition = 'all 1s ease-in-out'; // Устанавливаем плавную анимацию для всех изменений стиля с продолжительностью
+  const currentSize = parseFloat(getComputedStyle(whatsappButton).width); // Получаем текущую ширину кнопки и преобразуем её в число с пла
+  const newSize = currentSize === 150 ? 100 : 150; // Если текущая ширина 150px, то уменьшаем до 100px, иначе увеличиваем до 150px
+  whatsappButton.style.width = newSize + 'px'; // Применяем новый размер ширины к кнопке
+  whatsappButton.style.height = newSize + 'px'; // Применяем новый размер высоты к кнопке, чтобы она оставалась квадратной
+}
+
+setInterval(changeButtonSize, 2000);
+    </script>
+</body>
+</html>

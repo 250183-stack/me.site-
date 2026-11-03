@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoaLRush</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Шапка */
+        header {
+            background-color: #2b0a03;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        /* Навигация */
+        nav {
+            margin-top: 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #5c180c;
+        }
+
+        /* Поиск */
+        .search {
+            margin-top: 20px;
+        }
+
+        .search input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search button:hover {
+            background-color: #7a2010;
+        }
+
+        /* Контент */
+        main {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
+
+        /* Управление отображением секций */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2b0a03;
+            margin-bottom: 25px;
+        }
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+            color: #2b0a03;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Уведомление для поиска */
+        #no-results {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 40px;
+        }
+
+        /* Подвал */
+        footer {
+            background-color: #2b0a03;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo" onclick="showSection('home')">GoaLRush</a>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" onclick="showSection('home')">Главная</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('clubs')">Футбольные Клубы</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('transfers')">Трансферы</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('tournaments')">Чемпионаты</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('players')">Футболисты</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск информации...">
+            <button id="searchBtn" type="button">Найти</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- СЕКЦИЯ: Главная -->
+        <section id="home" class="page-section active">
+            <h1 class="section-title">Добро пожаловать на GoaLRush</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <img src="i.webp" alt="Клубы">
+                    <h3>Футбольные Клубы</h3>
+                    <p>Обзоры и новости лучших футбольных клубов мира.</p>
+                </div>
+                <div class="card">
+                    <img src="1images.jfif" alt="Трансферы">
+                    <h3>Трансферы</h3>
+                    <p>Свежие слухи и громкие переходы игроков.</p>
+                </div>
+                <div class="card">
+                    <img src="01683078.webp" alt="Чемпионаты">
+                    <h3>Чемпионаты</h3>
+                    <p>Результаты и таблицы топовых лиг Европы и мира.</p>
+                </div>
+                <div class="card">
+                    <img src="2images.jfif" alt="Футболисты">
+                    <h3>Футболисты</h3>
+                    <p>Статистика, профили и достижения звезд футбола.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Футбольные Клубы -->
+        <section id="clubs" class="page-section">
+            <h1 class="section-title">Футбольные Клубы</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Реал Мадрид</h3>
+                    <p>Страна: Испания</p>
+                    <p>15-кратные обладатели кубка Лиги Чемпионов.</p>
+                </div>
+                <div class="card">
+                    <h3>Манчестер Сити</h3>
+                    <p>Страна: Англия</p>
+                    <p>Действующие чемпионы Английской Премьер-лиги.</p>
+                </div>
+                <div class="card">
+                    <h3>Бавария Мюнхен</h3>
+                    <p>Страна: Германия</p>
+                    <p>Гранд немецкого футбола и гегемон Бундеслиги.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Трансферы -->
+        <section id="transfers" class="page-section">
+            <h1 class="section-title">Последние Трансферы</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Переход Мбаппе</h3>
+                    <p>Килиан Мбаппе официально стал игроком «Реал Мадрид».</p>
+                </div>
+                <div class="card">
+                    <h3>Слухи: Салах</h3>
+                    <p>Саудовские клубы готовят новое предложение по форварду.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Чемпионаты -->
+        <section id="tournaments" class="page-section">
+            <h1 class="section-title">Чемпионаты и Турниры</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Лига Чемпионов УЕФА</h3>
+                    <p>Главный клубный турнир Европы с обновленным форматом.</p>
+                </div>
+                <div class="card">
+                    <h3>Английская Премьер-лига</h3>
+                    <p>Самая зрелищная и богатая лига планеты.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Футболисты -->
+        <section id="players" class="page-section">
+            <h1 class="section-title">Топовые Футболисты</h1>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Лионель Месси</h3>
+                    <p>Клуб: Интер Майами</p>
+                    <p>Восьмикратный обладатель «Золотого мяча л».</p>
+                </div>
+                <div class="card">
+                    <h3>Криштиану Роналду</h3>
+                    <p>Клуб: Аль-Наср</p>
+                    <p>Лучший бомбардир в истории официальных матчей.
+                        Величайщий футболист современности, обладатель 5 «Золотых мячей».</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="no-results">По вашему запросу ничего не найдено</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 GoaLRush</p>
+    </footer>
+
+    <script>
+        // Функция переключения разделов при клике на меню
+        function showSection(sectionId) {
+            // Скрываем все разделы
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Убираем активный класс у всех ссылок
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Показываем нужный раздел
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Очищаем поиск при переходе
+            document.getElementById('searchInput').value = '';
+            document.getElementById('no-results').style.display = 'none';
+        }
+
+        // Поиск по всем карточкам на сайте
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('no-results');
+            let matchesFound = false;
+
+            if (query === '') {
+                showSection('home');
+                return;
+            }
+
+            // Показываем все разделы, чтобы отфильтровать их карточки
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.add('active'));
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    matchesFound = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (matchesFound) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = 'block';
+            }
+        }
+
+        searchInput.addEventListener('keyup', performSearch);
+        searchBtn.addEventListener('click', performSearch);
+    </script>
+</body>
+</html>

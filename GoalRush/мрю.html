@@ -1,0 +1,3426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111312">
+    <meta name="description" content="GoaLRush — футбольные клубы, турниры, трансферы и составы команд.">
+    <title>GoaLRush — футбольный портал</title>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('ChatGPT Image 29 сент. 2026 г., 18_13_44.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+
+        /* Шапка */
+        header {
+            background-color: #2b0a03;
+            padding: 20px;
+            text-align: center;
+        }
+
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+
+        nav {
+            margin-top: 15px;
+        }
+
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+
+        nav a:hover, nav a.active {
+            background-color: #5c180c;
+        }
+
+
+        .search {
+            margin-top: 20px;
+        }
+
+
+        .search input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+
+        .search button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .search button:hover {
+            background-color: #7a2010;
+        }
+
+
+        main {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 500px;
+        }
+
+
+        .page-section {
+            display: none;
+        }
+
+
+        .page-section.active {
+            display: block;
+        }
+
+
+        .section-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+
+        .league-group {
+            margin-bottom: 35px;
+        }
+
+        .club-filter-controls {
+            box-sizing: border-box;
+            min-width: 0;
+            margin: 0 0 25px;
+            padding: 16px;
+            border: 1px solid rgba(43, 10, 3, 0.35);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .club-filter-controls legend {
+            position: relative;
+            top: 8px;
+            max-width: calc(100% - 16px);
+            padding: 0 8px;
+            color: #2b0a03;
+            font-weight: bold;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        .club-filter-options {
+            box-sizing: border-box;
+            max-height: 120px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            gap: 10px 18px;
+            padding: 8px;
+            border: 1px solid rgba(43, 10, 3, 0.2);
+            border-radius: 6px;
+        }
+
+        .club-filter-options label {
+            color: #2b0a03;
+            cursor: pointer;
+        }
+
+        .club-filter-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .club-filter-actions button {
+            padding: 9px 14px;
+            border: 0;
+            border-radius: 4px;
+            background-color: #5c180c;
+            color: #fff;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .club-filter-actions button:hover {
+            background-color: #7a2010;
+        }
+
+        #clubFilterStatus {
+            margin: 10px 0 0;
+            color: #2b0a03;
+            text-align: center;
+        }
+
+
+        .league-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+
+        .back-button {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 16px;
+            background-color: #5c180c;
+            color: #fff;
+            border: 0;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+        .squad-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+
+        .player-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+        }
+
+
+        .player-controls label {
+            display: grid;
+            gap: 6px;
+            color: #2b0a03;
+            font-weight: bold;
+        }
+
+
+        .player-controls select {
+            min-width: 220px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            font: inherit;
+        }
+
+
+        .player-controls select:disabled {
+            color: #777;
+            background: #eee;
+        }
+
+
+        #playerStatus,
+        .player-source {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.88);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+
+        .player-card {
+            cursor: default;
+        }
+
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+
+        .card h3 {
+            margin: 10px 0 5px;
+            color: #2b0a03;
+        }
+
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+
+
+        .imgsocial {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+        }
+
+
+        .click-hint {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+
+        /* Всплывающее окно (Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            border: 0;
+            background: transparent;
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+
+        .close-btn:hover {
+            color: #5c180c;
+        }
+
+
+        .modal-title {
+            color: #2b0a03;
+            margin-top: 0;
+            border-bottom: 2px solid #5c180c;
+            padding-bottom: 10px;
+        }
+
+
+        .modal-body {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin-top: 15px;
+        }
+
+
+        #no-results {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #5c180c;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+
+
+        footer {
+            background-color: #2b0a03;
+            color: #fff;
+            text-align: center;
+            padding: 30px 15px 15px;
+            margin-top: 40px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            margin-left: -50vw;
+            margin-bottom: -30px;
+            box-sizing: border-box;
+        }
+
+
+        .subscription-form input[type="email"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+
+        .subscription-form button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+
+        .map-frame {
+            display: block;
+            width: min(100%, 600px);
+            height: 350px;
+            margin: 15px auto;
+            border: 0;
+            border-radius: 8px;
+        }
+
+
+        .footer-copyright {
+            border-top: 1px solid #5c180c;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #000000;
+        }
+        .seasonal-ingredients { /* Секция сезонных ингредиентов */
+   /* Шрифт для текста */
+  background-color: #551717; /* Цвет фона */
+  padding: 20px; /* Внутренние отступы */
+  border-radius: 10px; /* Скругленные углы */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тень вокруг блока */
+  margin-top: 20px; /* Отступ сверху */
+}
+
+.seasonal-ingredients h2 { /* Заголовок секции */
+  font-size: 24px; /* Размер шрифта заголовка */
+  color: #faf3f2; /* Цвет заголовка */
+}
+
+.seasonal-ingredients ul { /* Список ингредиентов */
+  list-style: none; /* Убираем маркеры списка */
+  padding: 0; /* Убираем внутренние отступы */
+}
+
+.seasonal-ingredients li { /* Элементы списка */
+  margin: 20px 0; /* Отступы между элементами списка */
+  border: 1px solid #5e1111; /* Граница элементов */
+  padding: 20px; /* Внутренние отступы элемента */
+  border-radius: 10px; /* Скругленные углы элементов */
+  background-color: #611414; /* Цвет фона элементов */
+  transition: transform 0.3s; /* Плавная анимация изменения размера */
+  cursor: pointer; /* Указатель при наведении на элемент */
+}
+
+.seasonal-ingredients li:hover { /* Эффект при наведении на элементы списка */
+  transform: scale(1.02); /* Увеличение размера при наведении */
+}
+
+.season-image { /* Изображение для сезона */
+  width: 200px; /* Ширина изображения */
+  height: 150px; /* Высота изображения */
+  border-radius: 5px; /* Скругленные углы изображения */
+}
+
+.scrollable-container { /* Контейнер с прокруткой */
+  max-height: 300px; /* Максимальная высота контейнера */
+  overflow-y: auto; /* Вертикальная прокрутка при переполнении */
+}
+.filter { /* Контейнер для фильтров */
+    margin-top: 20px; /* Отступ сверху */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+.filter-button { /* Кнопка для применения фильтра */
+    font-family: 'Comic Sans MS', cursive; /* Шрифт кнопки */
+    background-color: #58200a; /* Цвет фона кнопки */
+    color: #FFF; /* Цвет текста кнопки */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Скругленные углы */
+    padding: 10px 20px; /* Внутренние отступы кнопки */
+    margin-left: 10px; /* Отступ слева */
+    cursor: pointer; /* Курсор указателя при наведении */
+    transition: background-color 0.3s ease; /* Плавная смена цвета фона при наведении */
+}
+.filter-button:hover { /* Стили при наведении на кнопку */
+    background-color: #af8b83; /* Изменение цвета фона при наведении */
+}
+
+        .logo {
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.2s ease, text-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            color: #ffd27a;
+            transform: translateY(-2px);
+            text-shadow: 0 0 14px rgba(255, 210, 122, 0.45);
+        }
+
+        nav a {
+            display: inline-block;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #ffd27a;
+            transform: translateY(-2px);
+        }
+
+        .search input[type="text"] {
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search input[type="text"]:focus,
+        .subscription-form input[type="email"]:focus {
+            border-color: #b87936;
+            box-shadow: 0 0 0 3px rgba(184, 121, 54, 0.2);
+        }
+
+        .search button,
+        .club-filter-actions button,
+        .back-button,
+        .subscription-form button,
+        #backToTop,
+        .filter-button {
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search button:hover,
+        .club-filter-actions button:hover,
+        .back-button:hover,
+        .subscription-form button:hover,
+        #backToTop:hover,
+        .filter-button:hover {
+            background-color: #8a2b17;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(43, 10, 3, 0.28);
+        }
+
+        .card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .card:hover {
+            border-color: #b87936;
+        }
+
+        .seasonal-ingredients li {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .seasonal-ingredients li:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: #d5a14a;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        a.imgsocial {
+            display: inline-block;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        a.imgsocial:hover {
+            transform: translateY(-4px) scale(1.08);
+            filter: drop-shadow(0 4px 5px rgba(255, 210, 122, 0.45));
+        }
+
+        :focus-visible {
+            outline: 3px solid #d5a14a;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+
+            .logo:hover,
+            nav a:hover,
+            .search button:hover,
+            .club-filter-actions button:hover,
+            .back-button:hover,
+            .subscription-form button:hover,
+            #backToTop:hover,
+            .filter-button:hover,
+            .card:hover,
+            .seasonal-ingredients li:hover,
+            a.imgsocial:hover {
+                transform: none;
+            }
+        }
+
+        :root {
+            color-scheme: dark;
+            --page: #111412;
+            --surface: #191d1a;
+            --surface-raised: #202521;
+            --text: #f5f4ef;
+            --muted: #a4aaa2;
+            --accent: #d7a64b;
+            --accent-strong: #f0c66f;
+            --line: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            color: var(--text);
+            background: radial-gradient(ellipse at 50% -18%, #263027 0, var(--page) 55%);
+            background-attachment: fixed;
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.55;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            padding: 0 24px;
+            background: rgba(17, 20, 18, 0.94);
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            backdrop-filter: blur(16px);
+        }
+
+        .header-inner {
+            width: min(100%, 1240px);
+            min-height: 78px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+
+        .logo {
+            display: inline-flex;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            font-size: 19px;
+            letter-spacing: 0.08em;
+        }
+
+        .logo-mark {
+            display: grid;
+            width: 35px;
+            height: 35px;
+            place-items: center;
+            border-radius: 10px 3px 10px 3px;
+            background: var(--accent);
+            color: #171711;
+            font-size: 21px;
+            font-weight: 900;
+            letter-spacing: 0;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        nav {
+            margin: 0;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            padding: 9px 12px;
+            color: #c6cbc4;
+            font-size: 13px;
+            font-weight: 650;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: rgba(215, 166, 75, 0.12);
+            color: var(--accent-strong);
+        }
+
+        .search {
+            display: flex;
+            flex: 0 1 210px;
+            margin: 0;
+        }
+
+        .search input[type="text"] {
+            width: 100%;
+            min-width: 0;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-right: 0;
+            border-radius: 8px 0 0 8px;
+            background: #202420;
+            color: var(--text);
+        }
+
+        .search input::placeholder {
+            color: #858c84;
+        }
+
+        .search button {
+            min-width: 42px;
+            padding: 8px 12px;
+            border-radius: 0 8px 8px 0;
+            background: var(--accent);
+            color: #171711;
+            font-size: 21px;
+            line-height: 1;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        main {
+            width: min(100%, 1240px);
+            min-height: 60vh;
+            padding: 34px 24px 70px;
+        }
+
+        .page-section {
+            color: var(--text);
+        }
+
+        .section-title {
+            margin: 0 0 20px;
+            padding: 0 0 18px;
+            border-bottom: 1px solid var(--line);
+            border-radius: 0;
+            background: transparent;
+            color: var(--text);
+            font-size: clamp(28px, 4vw, 42px);
+            letter-spacing: -0.04em;
+            text-align: left;
+        }
+
+        .home-hero {
+            position: relative;
+            min-height: 430px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: linear-gradient(120deg, #1d241e, #111412 72%);
+        }
+
+        .hero-copy {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: clamp(30px, 6vw, 72px);
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 13px;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .eyebrow-mark,
+        .data-badge > span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .hero-copy h1 {
+            max-width: 570px;
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 0.99;
+            letter-spacing: -0.065em;
+        }
+
+        .hero-copy h1 span {
+            color: var(--accent-strong);
+        }
+
+        .hero-description {
+            max-width: 410px;
+            margin: 20px 0 0;
+            color: #bec4bc;
+            font-size: 16px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 27px;
+        }
+
+        .button {
+            min-height: 46px;
+            padding: 11px 17px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 750;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .button-primary {
+            background: var(--accent);
+            color: #171711;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-strong);
+            transform: translateY(-2px);
+        }
+
+        .button-quiet {
+            border-color: rgba(255, 255, 255, 0.22);
+            background: transparent;
+            color: var(--text);
+        }
+
+        .button-quiet:hover {
+            border-color: var(--accent);
+            color: var(--accent-strong);
+        }
+
+        .hero-caption {
+            margin: 32px 0 0;
+            color: #798178;
+            font-size: 10px;
+            font-weight: 750;
+            letter-spacing: 0.18em;
+        }
+
+        .hero-photo {
+            position: relative;
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+        .hero-photo::after {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #171d18 0%, rgba(23, 29, 24, 0.08) 45%, rgba(10, 12, 10, 0.12) 100%), linear-gradient(0deg, rgba(10, 12, 10, 0.76), transparent 55%);
+            content: "";
+        }
+
+        .hero-photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 28%;
+        }
+
+        .hero-photo-label {
+            position: absolute;
+            z-index: 1;
+            right: 28px;
+            bottom: 26px;
+            left: 28px;
+            display: grid;
+            gap: 4px;
+        }
+
+        .hero-photo-label span {
+            color: var(--accent-strong);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+        }
+
+        .hero-photo-label strong {
+            font-size: 23px;
+        }
+
+        .match-center,
+        .portal-section {
+            margin-top: 54px;
+        }
+
+        .match-center {
+            padding: 24px 28px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: linear-gradient(120deg, #1a201b, #171a18);
+        }
+
+        .match-center-heading,
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .match-center-heading .eyebrow,
+        .section-heading .eyebrow {
+            margin-bottom: 4px;
+        }
+
+        .match-center h2,
+        .section-heading h2 {
+            margin: 0;
+            font-size: clamp(22px, 3vw, 30px);
+            letter-spacing: -0.04em;
+        }
+
+        .data-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border: 1px solid rgba(215, 166, 75, 0.25);
+            border-radius: 30px;
+            color: #cdb581;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .data-badge > span {
+            background: #d08b48;
+        }
+
+        .match-center-empty {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+            padding: 19px 0 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .empty-ball {
+            display: grid;
+            flex: 0 0 44px;
+            width: 44px;
+            height: 44px;
+            place-items: center;
+            border: 1px solid rgba(215, 166, 75, 0.3);
+            border-radius: 50%;
+            color: var(--accent);
+            font-size: 28px;
+        }
+
+        .match-center-empty strong {
+            font-size: 14px;
+        }
+
+        .match-center-empty p {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .text-link {
+            flex: 0 0 auto;
+            margin-left: auto;
+            padding: 8px 0 8px 14px;
+            border: 0;
+            background: transparent;
+            color: var(--accent-strong);
+            font: inherit;
+            font-size: 12px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        .text-link:hover {
+            color: var(--text);
+        }
+
+        .section-heading {
+            margin-bottom: 20px;
+        }
+
+        .section-aside {
+            color: #858d84;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.11em;
+            text-align: right;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .feature-card {
+            position: relative;
+            min-height: 280px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: var(--surface);
+            color: var(--text);
+            text-decoration: none;
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .feature-card::after {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(12, 15, 13, 0.98) 0%, rgba(12, 15, 13, 0.65) 43%, rgba(12, 15, 13, 0.04) 100%);
+            content: "";
+        }
+
+        .feature-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+
+        .feature-card-clubs img {
+            object-position: center;
+        }
+
+        .feature-card-transfers img {
+            object-position: center;
+        }
+
+        .feature-card-copy {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            padding: 18px;
+        }
+
+        .feature-card-copy > span:first-child {
+            color: var(--accent-strong);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+        }
+
+        .feature-card-copy h3 {
+            margin: 7px 0 5px;
+            color: var(--text);
+            font-size: 19px;
+            line-height: 1.2;
+        }
+
+        .feature-card-copy p {
+            margin: 0;
+            color: #c0c5bf;
+            font-size: 12px;
+        }
+
+        .feature-arrow {
+            position: absolute;
+            right: 16px;
+            bottom: 17px;
+            color: var(--accent-strong);
+            font-size: 19px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(215, 166, 75, 0.65);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+            color: var(--text);
+        }
+
+        .feature-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .section-intro {
+            max-width: 720px;
+            margin: -7px 0 22px;
+            color: var(--muted);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+            justify-content: stretch;
+            gap: 16px;
+        }
+
+        .card {
+            width: auto;
+            min-width: 0;
+            padding: 19px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+            text-align: left;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(215, 166, 75, 0.6);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+        }
+
+        .card h3 {
+            color: var(--text);
+            font-size: 18px;
+        }
+
+        .card p {
+            color: var(--muted);
+        }
+
+        .card img {
+            height: 170px;
+            border-radius: 8px;
+        }
+
+        .player-card {
+            cursor: default;
+        }
+
+        .transfer-card {
+            position: relative;
+            min-height: 210px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .transfer-status {
+            position: absolute;
+            top: 17px;
+            left: 17px;
+            padding: 6px 9px;
+            border: 1px solid rgba(215, 166, 75, 0.35);
+            border-radius: 20px;
+            background: rgba(215, 166, 75, 0.1);
+            color: var(--accent-strong);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .transfer-status-rumor {
+            border-color: rgba(180, 190, 180, 0.24);
+            background: rgba(180, 190, 180, 0.08);
+            color: #bfc6bd;
+        }
+
+        .transfer-route {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .transfer-route b {
+            color: var(--accent);
+        }
+
+        .click-hint {
+            color: var(--accent-strong);
+        }
+
+        .league-title,
+        #playerStatus,
+        .player-source,
+        .club-filter-controls {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .league-title {
+            padding: 13px 18px;
+            text-align: left;
+        }
+
+        .club-filter-controls legend,
+        .club-filter-options label,
+        #clubFilterStatus,
+        .player-controls label {
+            color: var(--text);
+        }
+
+        .club-filter-options {
+            border-color: var(--line);
+        }
+
+        .club-filter-actions button,
+        .back-button,
+        .filter-button {
+            border-radius: 8px;
+            background: var(--accent);
+            color: #171711;
+        }
+
+        .search button:hover,
+        .club-filter-actions button:hover,
+        .back-button:hover,
+        #backToTop:hover {
+            background: var(--accent-strong);
+            color: #171711;
+        }
+
+        .player-controls {
+            justify-content: flex-start;
+            border: 1px solid var(--line);
+            background: var(--surface);
+        }
+
+        .player-controls select {
+            border-color: var(--line);
+            background: #202420;
+            color: var(--text);
+        }
+
+        #playerStatus,
+        .player-source {
+            color: #d2d7cf;
+        }
+
+        .player-source a,
+        .squad-link {
+            color: var(--accent-strong);
+        }
+
+        #no-results {
+            color: var(--text);
+            background: var(--surface-raised);
+        }
+
+        footer {
+            left: auto;
+            width: 100%;
+            margin: 0;
+            padding: 42px 24px 18px;
+            border-top: 1px solid var(--line);
+            background: #0c0f0d;
+            color: var(--text);
+        }
+
+        .footer-inner {
+            width: min(100%, 1240px);
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            max-width: 420px;
+        }
+
+        .footer-brand strong {
+            color: var(--accent-strong);
+            font-size: 19px;
+            letter-spacing: 0.07em;
+        }
+
+        .footer-brand p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .social-links .imgsocial {
+            width: 34px;
+            height: 34px;
+            margin: 0;
+        }
+
+        .social-links img.imgsocial {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .footer-copyright {
+            width: min(100%, 1240px);
+            margin: 28px auto 0;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            color: #858d84;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .modal-content {
+            background: var(--surface-raised);
+            color: var(--text);
+        }
+
+        .modal-title {
+            color: var(--text);
+        }
+
+        .modal-body {
+            color: #c3c9c1;
+        }
+
+        .close-btn {
+            color: var(--muted);
+        }
+
+        @media (max-width: 1050px) {
+            .header-inner {
+                gap: 14px;
+            }
+
+            nav a {
+                padding: 9px 8px;
+                font-size: 12px;
+            }
+
+            .search {
+                flex-basis: 175px;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            header {
+                padding: 0 18px;
+            }
+
+            .header-inner {
+                min-height: 68px;
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px 0;
+            }
+
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                margin-left: auto;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--surface);
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                width: 17px;
+                height: 2px;
+                border-radius: 2px;
+                background: var(--text);
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                display: none;
+                margin: 0;
+                padding: 10px 18px 16px;
+                border-bottom: 1px solid var(--line);
+                background: rgba(17, 20, 18, 0.98);
+            }
+
+            nav.is-open {
+                display: block;
+            }
+
+            nav ul {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            nav a {
+                display: block;
+                padding: 11px 12px;
+                font-size: 14px;
+            }
+
+            .search {
+                order: 3;
+                flex: 1 0 100%;
+            }
+
+            main {
+                padding: 22px 18px 54px;
+            }
+
+            .home-hero {
+                min-height: 0;
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy {
+                padding: 36px 28px;
+            }
+
+            .hero-photo {
+                min-height: 260px;
+            }
+
+            .hero-photo::after {
+                background: linear-gradient(0deg, rgba(10, 12, 10, 0.76), transparent 70%);
+            }
+
+            .match-center,
+            .portal-section {
+                margin-top: 38px;
+            }
+
+            .match-center {
+                padding: 20px;
+            }
+
+            .match-center-heading,
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .section-aside {
+                text-align: left;
+            }
+
+            .match-center-empty {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .text-link {
+                margin-left: 60px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                min-height: 245px;
+            }
+
+            .hero-copy {
+                padding: 30px 22px;
+            }
+
+            .hero-copy h1 {
+                font-size: clamp(39px, 12vw, 58px);
+            }
+
+            .hero-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .data-badge {
+                white-space: normal;
+            }
+
+            .match-center-empty {
+                gap: 12px;
+            }
+
+            .empty-ball {
+                flex-basis: 38px;
+                width: 38px;
+                height: 38px;
+            }
+
+            .text-link {
+                margin-left: 50px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .feature-card:hover,
+            .feature-card:hover img,
+            .button:hover {
+                transform: none;
+            }
+        }
+
+        :root {
+            color-scheme: light;
+            --page: #f3f1ec;
+            --surface: #fff;
+            --surface-raised: #fff;
+            --text: #20201e;
+            --muted: #686863;
+            --accent: #a52e28;
+            --accent-strong: #85211d;
+            --line: #dedbd4;
+        }
+
+        body {
+            background: var(--page);
+            background-image: none;
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            position: relative;
+            background: #fff;
+            border-bottom: 1px solid #d5d1c9;
+            backdrop-filter: none;
+        }
+
+        .header-inner {
+            min-height: 72px;
+        }
+
+        .logo {
+            gap: 0;
+            color: #20201e;
+            font-size: 21px;
+            letter-spacing: -0.06em;
+        }
+
+        .logo-mark {
+            display: none;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        nav a {
+            border-radius: 0;
+            color: #464640;
+            font-size: 13px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        nav a.active {
+            box-shadow: inset 0 -2px var(--accent);
+        }
+
+        .search input[type="text"] {
+            border-color: #dedbd4;
+            background: #f7f6f3;
+            color: var(--text);
+        }
+
+        .search button {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .search button:hover,
+        .club-filter-actions button:hover,
+        .back-button:hover,
+        #backToTop:hover {
+            background: var(--accent-strong);
+            color: #fff;
+        }
+
+        main {
+            padding-top: 30px;
+            padding-bottom: 64px;
+        }
+
+        .home-hero {
+            min-height: 390px;
+            border: 0;
+            border-top: 4px solid var(--accent);
+            border-radius: 0;
+            background: #e7e4dc;
+        }
+
+        .hero-copy {
+            padding: clamp(28px, 5vw, 58px);
+        }
+
+        .eyebrow {
+            margin-bottom: 9px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .eyebrow-mark {
+            display: none;
+        }
+
+        .hero-copy h1,
+        .match-center h2,
+        .section-heading h2,
+        .section-title,
+        .feature-card-copy h3,
+        .card h3 {
+            font-family: Georgia, "Times New Roman", serif;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-copy h1 {
+            max-width: 500px;
+            font-size: clamp(40px, 5.2vw, 68px);
+            line-height: 1.02;
+        }
+
+        .hero-copy h1 span {
+            color: var(--accent);
+        }
+
+        .hero-description {
+            max-width: 360px;
+            margin-top: 15px;
+            color: #55554f;
+            font-size: 16px;
+        }
+
+        .hero-actions {
+            margin-top: 22px;
+        }
+
+        .button {
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .button-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-strong);
+        }
+
+        .hero-photo::after {
+            background: linear-gradient(0deg, rgba(20, 19, 17, 0.7), transparent 50%);
+        }
+
+        .hero-photo-label span {
+            color: #f2d89b;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-photo-label strong {
+            color: #fff;
+        }
+
+        .match-center,
+        .portal-section {
+            margin-top: 40px;
+        }
+
+        .match-center {
+            padding: 21px 24px;
+            border: 0;
+            border-left: 4px solid var(--accent);
+            border-radius: 0;
+            background: #e7e4dc;
+        }
+
+        .match-center .eyebrow,
+        .section-heading .eyebrow {
+            margin-bottom: 2px;
+        }
+
+        .match-center h2,
+        .section-heading h2 {
+            font-size: clamp(23px, 3vw, 31px);
+        }
+
+        .data-badge {
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            color: #696962;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0;
+        }
+
+        .data-badge > span {
+            display: none;
+        }
+
+        .match-center-empty {
+            margin-top: 14px;
+            padding-top: 14px;
+        }
+
+        .empty-ball {
+            border-color: #c9c4ba;
+            color: var(--accent);
+        }
+
+        .text-link {
+            color: var(--accent);
+        }
+
+        .text-link:hover {
+            color: var(--accent-strong);
+        }
+
+        .section-heading {
+            margin-bottom: 15px;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #d5d1c9;
+        }
+
+        .section-aside {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        .feature-grid {
+            gap: 16px;
+        }
+
+        .feature-card {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            border: 1px solid #dedbd4;
+            border-radius: 0;
+            background: #fff;
+            color: var(--text);
+            box-shadow: none;
+        }
+
+        .feature-card::after {
+            display: none;
+        }
+
+        .feature-card img {
+            position: relative;
+            inset: auto;
+            display: block;
+            width: 100%;
+            height: 165px;
+            object-fit: cover;
+        }
+
+        .feature-card-clubs img {
+            object-position: center;
+        }
+
+        .feature-card-transfers img {
+            object-position: center 38%;
+        }
+
+        .feature-card-tournaments img {
+            object-position: center 38%;
+        }
+
+        .feature-card-players img {
+            object-position: center 30%;
+        }
+
+        .feature-card-copy {
+            min-height: 136px;
+            padding: 15px 16px 18px;
+        }
+
+        .feature-card-copy > span:first-child {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .feature-card-copy h3 {
+            margin: 6px 0;
+            color: var(--text);
+            font-size: 19px;
+        }
+
+        .feature-card-copy p {
+            max-width: 220px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .feature-arrow {
+            right: 16px;
+            bottom: 16px;
+            color: var(--accent);
+        }
+
+        .feature-card:hover {
+            transform: none;
+            border-color: #b7afa2;
+            box-shadow: 0 5px 15px rgba(30, 28, 23, 0.08);
+            color: var(--text);
+        }
+
+        .feature-card:hover img {
+            transform: none;
+        }
+
+        .section-title {
+            padding-bottom: 13px;
+            border-bottom-color: #d5d1c9;
+            color: var(--text);
+        }
+
+        .section-intro {
+            color: var(--muted);
+        }
+
+        .cards-grid {
+            gap: 12px;
+        }
+
+        .card {
+            padding: 18px;
+            border: 1px solid #dedbd4;
+            border-radius: 0;
+            background: #fff;
+            color: var(--text);
+            box-shadow: none;
+        }
+
+        .card:hover {
+            transform: none;
+            border-color: #b7afa2;
+            box-shadow: 0 5px 15px rgba(30, 28, 23, 0.07);
+        }
+
+        .card h3 {
+            color: var(--text);
+            font-size: 19px;
+        }
+
+        .card p {
+            color: var(--muted);
+        }
+
+        .click-hint,
+        .player-source a,
+        .squad-link {
+            color: var(--accent);
+        }
+
+        .transfer-card {
+            min-height: 185px;
+            justify-content: flex-start;
+            padding-top: 57px;
+        }
+
+        .transfer-status {
+            top: 16px;
+            left: 18px;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 0;
+        }
+
+        .transfer-status-rumor {
+            background: transparent;
+            color: #6b6b65;
+        }
+
+        .league-title,
+        #playerStatus,
+        .player-source,
+        .club-filter-controls,
+        .player-controls {
+            border: 1px solid #dedbd4;
+            border-radius: 0;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .league-title {
+            color: var(--text);
+        }
+
+        .club-filter-controls legend,
+        .club-filter-options label,
+        #clubFilterStatus,
+        .player-controls label {
+            color: var(--text);
+        }
+
+        .club-filter-options {
+            border-color: #dedbd4;
+        }
+
+        .club-filter-actions button,
+        .back-button,
+        .filter-button {
+            border-radius: 3px;
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .player-controls select {
+            border-color: #dedbd4;
+            border-radius: 3px;
+            background: #fff;
+            color: var(--text);
+        }
+
+        #playerStatus,
+        .player-source {
+            color: #454540;
+        }
+
+        footer {
+            border-top: 3px solid var(--accent);
+            background: #24231f;
+            color: #fff;
+        }
+
+        .footer-brand strong {
+            color: #fff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 23px;
+            letter-spacing: -0.03em;
+        }
+
+        .footer-brand p {
+            color: #d0cec7;
+        }
+
+        .footer-copyright {
+            border-top-color: rgba(255, 255, 255, 0.18);
+            color: #bbb8b0;
+        }
+
+        .modal-content {
+            border-radius: 3px;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .modal-title {
+            color: var(--text);
+        }
+
+        .modal-body {
+            color: #454540;
+        }
+
+        .close-btn {
+            color: #555;
+        }
+
+        @media (max-width: 760px) {
+            header {
+                padding: 0 18px;
+            }
+
+            nav {
+                border-bottom-color: #d5d1c9;
+                background: #fff;
+            }
+
+            .menu-toggle {
+                border-color: #dedbd4;
+                border-radius: 3px;
+                background: #f7f6f3;
+            }
+
+            .menu-toggle span {
+                background: #292824;
+            }
+
+            .home-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy {
+                padding: 30px 24px;
+            }
+
+            .hero-photo {
+                min-height: 240px;
+            }
+
+            .feature-grid {
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .feature-card img {
+                height: 125px;
+            }
+
+            .feature-card-copy {
+                min-height: 142px;
+                padding: 12px;
+            }
+
+            .feature-card-copy h3 {
+                font-size: 17px;
+            }
+
+            .feature-card-copy p {
+                font-size: 12px;
+            }
+        }
+
+        :root {
+            color-scheme: dark;
+            --page: #080a0b;
+            --surface: #111516;
+            --surface-raised: #171d1a;
+            --text: #edf2eb;
+            --muted: #9aa39b;
+            --accent: #b7ee58;
+            --accent-strong: #c9ff70;
+            --line: rgba(194, 215, 198, 0.14);
+        }
+
+        body {
+            color: var(--text);
+            background-color: var(--page);
+            background-image:
+                linear-gradient(rgba(8, 10, 11, 0.96), rgba(8, 10, 11, 0.96)),
+                linear-gradient(rgba(129, 165, 139, 0.09) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(129, 165, 139, 0.09) 1px, transparent 1px);
+            background-size: auto, 32px 32px, 32px 32px;
+            background-attachment: fixed;
+        }
+
+        header {
+            background: rgba(8, 10, 11, 0.96);
+            border-bottom-color: var(--line);
+        }
+
+        .logo {
+            color: var(--text);
+            font-family: "Segoe UI", Arial, sans-serif;
+            letter-spacing: -0.05em;
+        }
+
+        .logo-accent {
+            color: var(--accent);
+        }
+
+        nav a {
+            color: #b5beb6;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active {
+            box-shadow: inset 0 -2px var(--accent);
+        }
+
+        .search input[type="text"] {
+            border-color: var(--line);
+            background: #101514;
+            color: var(--text);
+        }
+
+        .search input::placeholder {
+            color: #7d8780;
+        }
+
+        .search button,
+        .button-primary,
+        .club-filter-actions button,
+        .back-button,
+        .filter-button {
+            background: var(--accent);
+            color: #10150d;
+        }
+
+        .search button:hover,
+        .button-primary:hover,
+        .club-filter-actions button:hover,
+        .back-button:hover,
+        #backToTop:hover {
+            background: var(--accent-strong);
+            color: #10150d;
+        }
+
+        .home-hero {
+            border-top-color: var(--accent);
+            background-color: #111715;
+            background-image:
+                radial-gradient(ellipse at 18% 55%, rgba(116, 164, 91, 0.13), transparent 60%),
+                repeating-linear-gradient(0deg, transparent 0 31px, rgba(163, 194, 167, 0.04) 32px),
+                repeating-linear-gradient(90deg, transparent 0 31px, rgba(163, 194, 167, 0.04) 32px);
+        }
+
+        .hero-copy {
+            position: relative;
+            isolation: isolate;
+        }
+
+        .hero-copy::after {
+            position: absolute;
+            z-index: -1;
+            right: 12px;
+            bottom: 10px;
+            width: 180px;
+            height: 100px;
+            background-image:
+                linear-gradient(rgba(183, 238, 88, 0.13) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(183, 238, 88, 0.13) 1px, transparent 1px);
+            background-size: 15px 15px;
+            content: "";
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-copy h1,
+        .match-center h2,
+        .section-heading h2,
+        .section-title,
+        .feature-card-copy h3,
+        .card h3 {
+            color: var(--text);
+        }
+
+        .hero-copy h1 span {
+            color: var(--accent);
+        }
+
+        .hero-description {
+            color: #aeb8af;
+        }
+
+        .button-primary {
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(183, 238, 88, 0.1);
+        }
+
+        .button-quiet {
+            border-color: var(--line);
+            color: var(--text);
+        }
+
+        .button-quiet:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .hero-codeline {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 9px 12px;
+            border: 1px solid rgba(183, 238, 88, 0.17);
+            background: rgba(4, 8, 6, 0.52);
+            color: #a9b5aa;
+            font: 12px/1.4 Consolas, "Courier New", monospace;
+        }
+
+        .code-prompt,
+        .hero-codeline code span {
+            color: var(--accent);
+        }
+
+        .hero-codeline em {
+            color: #d7b678;
+            font-style: normal;
+        }
+
+        .code-cursor {
+            width: 7px;
+            height: 14px;
+            background: var(--accent);
+            animation: cursor-blink 1.15s steps(2, start) infinite;
+        }
+
+        @keyframes cursor-blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        .hero-photo::after {
+            background: linear-gradient(90deg, rgba(8, 12, 9, 0.08), transparent 30%), linear-gradient(0deg, rgba(8, 12, 9, 0.78), transparent 55%);
+        }
+
+        .hero-photo-label span {
+            color: var(--accent);
+        }
+
+        .match-center {
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            background: linear-gradient(110deg, #121816, #0d1110);
+        }
+
+        .data-badge {
+            color: #9aa79b;
+            font: 11px Consolas, "Courier New", monospace;
+        }
+
+        .match-center-empty {
+            border-top-color: var(--line);
+        }
+
+        .match-center-empty strong {
+            color: var(--text);
+        }
+
+        .match-center-empty p,
+        .section-aside {
+            color: var(--muted);
+        }
+
+        .empty-ball {
+            border-color: rgba(183, 238, 88, 0.3);
+            color: var(--accent);
+        }
+
+        .text-link,
+        .text-link:hover {
+            color: var(--accent);
+        }
+
+        .section-heading {
+            border-bottom-color: var(--line);
+        }
+
+        .feature-card {
+            border-color: var(--line);
+            background: #101413;
+            color: var(--text);
+        }
+
+        .feature-card-copy {
+            position: relative;
+            background: linear-gradient(180deg, #121715, #0e1210);
+        }
+
+        .feature-code {
+            display: block;
+            margin-bottom: 8px;
+            color: #77877b;
+            font: 10px Consolas, "Courier New", monospace;
+        }
+
+        .feature-card-copy > span:first-child,
+        .feature-arrow {
+            color: var(--accent);
+        }
+
+        .feature-card-copy p {
+            color: #9da69e;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(183, 238, 88, 0.48);
+            box-shadow: 0 0 22px rgba(111, 153, 71, 0.08);
+        }
+
+        .section-title {
+            border-bottom-color: var(--line);
+        }
+
+        .section-intro {
+            color: var(--muted);
+        }
+
+        .card,
+        .league-title,
+        #playerStatus,
+        .player-source,
+        .club-filter-controls,
+        .player-controls {
+            border-color: var(--line);
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .card:hover {
+            border-color: rgba(183, 238, 88, 0.45);
+            box-shadow: 0 0 20px rgba(111, 153, 71, 0.08);
+        }
+
+        .card h3 {
+            color: var(--text);
+        }
+
+        .card p,
+        .section-intro {
+            color: var(--muted);
+        }
+
+        .transfer-status {
+            color: var(--accent);
+        }
+
+        .transfer-status-rumor {
+            color: #9ba69c;
+        }
+
+        .click-hint,
+        .player-source a,
+        .squad-link,
+        .transfer-route b {
+            color: var(--accent);
+        }
+
+        .club-filter-controls legend,
+        .club-filter-options label,
+        #clubFilterStatus,
+        .player-controls label {
+            color: var(--text);
+        }
+
+        .club-filter-options {
+            border-color: var(--line);
+        }
+
+        .player-controls select {
+            border-color: var(--line);
+            background: #0c100e;
+            color: var(--text);
+        }
+
+        #playerStatus,
+        .player-source {
+            color: #c2cbc2;
+        }
+
+        .back-button,
+        .club-filter-actions button {
+            color: #10150d;
+        }
+
+        #no-results {
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        footer {
+            border-top-color: var(--accent);
+            background: #070908;
+        }
+
+        .footer-brand strong {
+            color: var(--text);
+        }
+
+        .footer-brand p,
+        .footer-copyright {
+            color: #929d94;
+        }
+
+        .footer-copyright {
+            border-top-color: var(--line);
+        }
+
+        .modal-content {
+            border: 1px solid var(--line);
+            background: var(--surface-raised);
+            color: var(--text);
+        }
+
+        .modal-title,
+        .close-btn {
+            color: var(--text);
+        }
+
+        .modal-body {
+            color: #c2cbc2;
+        }
+
+        :focus-visible {
+            outline-color: var(--accent);
+        }
+
+        @media (max-width: 760px) {
+            nav {
+                border-bottom-color: var(--line);
+                background: #090c0a;
+            }
+
+            .menu-toggle {
+                border-color: var(--line);
+                background: #111614;
+            }
+
+            .menu-toggle span {
+                background: var(--text);
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .code-cursor {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <header id="top">
+        <div class="header-inner">
+            <a class="logo" href="#home" onclick="event.preventDefault(); showSection('home')" aria-label="GoaLRush — на главную">
+                <span class="logo-mark" aria-hidden="true">G</span>
+                <span>Goal<span class="logo-accent">Rush</span></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <nav id="primaryNav" aria-label="Основная навигация">
+                <ul>
+                    <li><a class="nav-link active" href="#home" aria-current="page" onclick="event.preventDefault(); showSection('home')">Главная</a></li>
+                    <li><a class="nav-link" href="#clubs" onclick="event.preventDefault(); showSection('clubs')">Клубы</a></li>
+                    <li><a class="nav-link" href="#transfers" onclick="event.preventDefault(); showSection('transfers')">Трансферы</a></li>
+                    <li><a class="nav-link" href="#tournaments" onclick="event.preventDefault(); showSection('tournaments')">Турниры</a></li>
+                    <li><a class="nav-link" href="#players" onclick="event.preventDefault(); showSection('players')">Игроки</a></li>
+                </ul>
+            </nav>
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Поиск по сайту..." aria-label="Поиск по сайту">
+                <button id="searchBtn" type="button" aria-label="Найти">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <!-- СЕКЦИЯ: Главная -->
+        <section id="home" class="page-section active">
+            <div class="home-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">GOALRUSH · ФУТБОЛЬНЫЙ ЖУРНАЛ</p>
+                    <h1>Футбол.<br><span>Ближе к игре.</span></h1>
+                    <p class="hero-description">Клубы, турниры и игроки, за которыми следит весь мир.</p>
+                    <div class="hero-actions">
+                        <button class="button button-primary" type="button" onclick="showSection('tournaments')">Турниры <span aria-hidden="true">→</span></button>
+                    </div>
+                    <div class="hero-codeline" aria-label="Фрагмент кода: const match equals football">
+                        <span class="code-prompt">&gt;_</span>
+                        <code><span>const</span> match = <em>"football"</em>;</code>
+                        <span class="code-cursor" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="hero-photo">
+                    <img src="1.webp" alt="Футболист празднует гол на поле">
+                    <div class="hero-photo-label"><span>ГЛАВНОЕ В ФУТБОЛЕ</span><strong>Эмоции решают всё</strong></div>
+                </div>
+            </div>
+
+            <section class="match-center" aria-labelledby="matchCenterTitle">
+                <div class="match-center-heading">
+                    <div><p class="eyebrow">МАТЧ-ЦЕНТР</p><h2 id="matchCenterTitle">Ближайшие матчи</h2></div>
+                    <span class="data-badge">Расписание скоро появится</span>
+                </div>
+                <div class="match-center-empty">
+                    <span class="empty-ball" aria-hidden="true">◎</span>
+                    <div><strong>Следи за игрой вместе с GoaLRush</strong><p>Пока загляни в список турниров и клубов.</p></div>
+                    <button class="text-link" type="button" onclick="showSection('tournaments')">Все турниры <span aria-hidden="true">→</span></button>
+                </div>
+            </section>
+
+            <section class="portal-section" aria-labelledby="portalSectionsTitle">
+                <div class="section-heading">
+                    <div><p class="eyebrow">РАЗДЕЛЫ</p><h2 id="portalSectionsTitle">В центре внимания</h2></div>
+                    <span class="section-aside">Всё, что важно любителю футбола</span>
+                </div>
+                <div class="feature-grid">
+                    <a href="#clubs" class="feature-card feature-card-clubs" onclick="event.preventDefault(); showSection('clubs')">
+                        <img src="i.webp" alt="" loading="lazy">
+                        <div class="feature-card-copy"><code class="feature-code">// 01 · clubs</code><span>КЛУБЫ</span><h3>Команды и их история</h3><p>Знакомься с клубами ведущих лиг.</p><span class="feature-arrow" aria-hidden="true">→</span></div>
+                    </a>
+                    <a href="#transfers" class="feature-card feature-card-transfers" onclick="event.preventDefault(); showSection('transfers')">
+                        <img src="9098.jfif" alt="" loading="lazy">
+                        <div class="feature-card-copy"><code class="feature-code">// 02 · transfers</code><span>ТРАНСФЕРЫ</span><h3>Новости рынка</h3><p>Подтверждённые сделки и слухи.</p><span class="feature-arrow" aria-hidden="true">→</span></div>
+                    </a>
+                    <a href="#tournaments" class="feature-card feature-card-tournaments" onclick="event.preventDefault(); showSection('tournaments')">
+                        <img src="01683078.webp" alt="" loading="lazy">
+                        <div class="feature-card-copy"><code class="feature-code">// 03 · tournaments</code><span>ТУРНИРЫ</span><h3>Большие соревнования</h3><p>Главные лиги и кубковые турниры.</p><span class="feature-arrow" aria-hidden="true">→</span></div>
+                    </a>
+                    <a href="#players" class="feature-card feature-card-players" onclick="event.preventDefault(); showSection('players')">
+                        <img src="90.jfif" alt="" loading="lazy">
+                        <div class="feature-card-copy"><code class="feature-code">// 04 · players</code><span>ИГРОКИ</span><h3>Лица большого футбола</h3><p>Составы команд и их футболисты.</p><span class="feature-arrow" aria-hidden="true">→</span></div>
+                    </a>
+                </div>
+            </section>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Футбольные Клубы -->
+        <section id="clubs" class="page-section">
+            <h1 class="section-title">Футбольные Клубы</h1>
+            <fieldset class="club-filter-controls">
+                <legend>Фильтр клубов по стране</legend>
+                <div id="clubCountryFilters" class="club-filter-options"></div>
+                <div class="club-filter-actions">
+                    <button id="applyClubFilter" type="button">Применить фильтр</button>
+                    <button id="resetClubFilter" type="button">Сбросить</button>
+                </div>
+                <p id="clubFilterStatus" aria-live="polite">Показаны все страны.</p>
+            </fieldset>
+            <div id="clubLeagues"></div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Трансферы -->
+        <section id="transfers" class="page-section">
+            <h1 class="section-title">Трансферы</h1>
+            <p class="section-intro">Следи за подтверждёнными переходами и слухами трансферного рынка. Статус каждой новости важно сверять с официальными источниками.</p>
+            <div class="cards-grid">
+                <div class="card transfer-card">
+                    <span class="transfer-status">ОФИЦИАЛЬНО</span>
+                    <h3>Подтверждённые переходы</h3>
+                    <p>Официальные объявления клубов и игроков. Этот раздел пополняется после подтверждения сделки.</p>
+                </div>
+                <div class="card transfer-card">
+                    <span class="transfer-status transfer-status-rumor">СЛУХИ</span>
+                    <h3>Переговоры и интерес</h3>
+                    <p>Сообщения СМИ о возможных переходах — отдельно от завершённых сделок.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Чемпионаты -->
+        <section id="tournaments" class="page-section">
+            <h1 class="section-title">Чемпионаты</h1>
+            <div id="tournamentLeagueList">
+                <div class="cards-grid" id="tournamentLeagueCards"></div>
+            </div>
+            <div id="tournamentClubList" hidden>
+                <button class="back-button" id="backToLeagues" type="button">← Все лиги</button>
+                <h2 class="league-title" id="selectedLeagueTitle"></h2>
+                <div class="cards-grid" id="tournamentClubCards"></div>
+            </div>
+            <div class="cards-grid">
+                <div class="card" onclick="openClubModal('Лига Чемпионов УЕФА', 'Европа', 'Новый формат', 'Главный клубный турнир Европы с обновленным швейцарским форматом.')">
+                    <h3>Лига Чемпионов</h3>
+                    <p>Главный турнир Европы</p>
+                    <span class="click-hint">О турнире &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- СЕКЦИЯ: Футболисты -->
+        <section id="players" class="page-section">
+            <h1 class="section-title">Футболисты</h1>
+            <div class="player-controls">
+                <label for="playerLeague">Лига сезона 2026/27
+                    <select id="playerLeague">
+                        <option value="">Выберите лигу</option>
+                        <option value="eng.1">Англия — Премьер-лига</option>
+                        <option value="ita.1">Италия — Серия А</option>
+                        <option value="esp.1">Испания — Ла Лига</option>
+                        <option value="ger.1">Германия — Бундеслига</option>
+                        <option value="fra.1">Франция — Лига 1</option>
+                        <option value="ned.1">Нидерланды — Эредивизи</option>
+                        <option value="por.1">Португалия — Примейра-лига</option>
+                        <option value="bel.1">Бельгия — Про-лига</option>
+                        <option value="tur.1">Турция — Суперлига</option>
+                        <option value="cze.1">Чехия — Первая лига</option>
+                    </select>
+                </label>
+                <label for="playerTeam">Клуб
+                    <select id="playerTeam" disabled>
+                        <option value="">Сначала выберите лигу</option>
+                    </select>
+                </label>
+            </div>
+            <p id="playerStatus" role="status" aria-live="polite">Выберите лигу и клуб, чтобы посмотреть состав сезона 2026/27.</p>
+            <div class="cards-grid" id="playerCards"></div>
+            <p class="player-source">Для загрузки составов запустите <a href="start-site.bat">start-site.bat</a>. Данные предоставляются <a href="https://www.espn.com/soccer/" target="_blank" rel="noopener noreferrer">ESPN</a>.</p>
+        </section>
+
+
+        <div id="no-results">По вашему запросу ничего не найдено</div>
+    </main>
+
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <strong>GoalRush</strong>
+                <p>Футбол — это истории клубов, эмоции трибун и игра, которая объединяет.</p>
+            </div>
+            <div class="social-links" aria-label="Социальные сети">
+                <a class="imgsocial" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                    <img class="imgsocial" src="858.png" alt="">
+                </a>
+                <a class="imgsocial" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <img class="imgsocial" src="3322.jfif" alt="">
+                </a>
+                <a class="imgsocial" href="https://web.telegram.org/a/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <img class="imgsocial" src="3223.jfif" alt="">
+                </a>
+                <a class="imgsocial" href="https://api.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <img class="imgsocial" src="233.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 GoaLRush. Футбол объединяет.</p>
+        </div>
+    </footer>
+
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКОШКО -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" type="button" aria-label="Закрыть окно" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle" class="modal-title">Заголовок</h2>
+            <div id="modalBody" class="modal-body">Текст...</div>
+        </div>
+    </div>
+
+
+    <button id="backToTop" title="Наверх" onclick="topFunction()">&#8679;</button>
+    
+
+
+    <script>
+        // Функция открывания плашек без ошибок с кавычками
+        function openClubModal(title, country, stadium, description, squadUrl) {
+            document.getElementById('modalTitle').innerText = title;
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = '';
+
+
+            [
+                ['Страна / Клуб:', country],
+                ['Стадион / Статус:', stadium],
+                ['Описание:', description]
+            ].forEach(([label, value]) => {
+                const paragraph = document.createElement('p');
+                const strong = document.createElement('strong');
+                strong.textContent = `${label} `;
+                paragraph.append(strong, document.createTextNode(value));
+                modalBody.appendChild(paragraph);
+            });
+
+
+            if (squadUrl) {
+                const link = document.createElement('a');
+                link.className = 'squad-link';
+                link.href = squadUrl;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Найти состав сезона 2026/27 (выберите официальный сайт клуба)';
+                modalBody.appendChild(link);
+            }
+
+
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        function makeCardKeyboardAccessible(card) {
+            card.setAttribute('role', 'button');
+            card.tabIndex = 0;
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    card.click();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Переключение меню
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.page-section');
+            const targetSection = document.getElementById(sectionId);
+
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            if (!targetSection || !targetSection.classList.contains('page-section')) {
+                return;
+            }
+
+
+            sections.forEach(section => {
+                section.classList.toggle('active', section === targetSection);
+                section.querySelectorAll('.card, .feature-card').forEach(card => {
+                    card.style.display = '';
+                });
+            });
+            applyClubFilter();
+
+
+            navLinks.forEach(link => {
+                const isActive = link.getAttribute('href') === `#${sectionId}`;
+                link.classList.toggle('active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            const menuToggle = document.getElementById('menuToggle');
+            const primaryNav = document.getElementById('primaryNav');
+            primaryNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Открыть меню');
+
+            document.getElementById('searchInput').value = '';
+            document.getElementById('no-results').style.display = 'none';
+            if (sectionId === 'tournaments') {
+                document.getElementById('tournamentClubList').hidden = true;
+                document.getElementById('tournamentLeagueList').hidden = false;
+            }
+            if (sectionId === 'players' && !playerLeagueSelect.value) {
+                playerLeagueSelect.value = 'eng.1';
+                loadPlayerTeams();
+            }
+            closeModal();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        const clubLeagues = [
+            {
+                country: 'Англия',
+                league: 'Премьер-лига',
+                clubs: [
+                    'Манчестер Сити', 'Арсенал', 'Ливерпуль', 'Манчестер Юнайтед', 'Челси',
+                    'Тоттенхэм', 'Ньюкасл Юнайтед', 'Астон Вилла', 'Вест Хэм Юнайтед',
+                    'Брайтон', 'Эвертон', 'Брентфорд', 'Фулхэм', 'Кристал Пэлас',
+                    'Ноттингем Форест'
+                ]
+            },
+            {
+                country: 'Италия',
+                league: 'Серия А',
+                clubs: [
+                    'Интер', 'Милан', 'Ювентус', 'Наполи', 'Рома',
+                    'Лацио', 'Аталанта', 'Фиорентина', 'Болонья', 'Торино',
+                    'Удинезе', 'Дженоа', 'Сассуоло', 'Парма', 'Комо'
+                ]
+            },
+            {
+                country: 'Испания',
+                league: 'Ла Лига',
+                clubs: [
+                    'Реал Мадрид', 'Барселона', 'Атлетико Мадрид', 'Атлетик Бильбао',
+                    'Реал Сосьедад', 'Вильярреал', 'Реал Бетис', 'Севилья', 'Валенсия',
+                    'Жирона', 'Хетафе', 'Осасуна', 'Сельта', 'Эспаньол', 'Райо Вальекано'
+                ]
+            },
+            {
+                country: 'Германия',
+                league: 'Бундеслига',
+                clubs: [
+                    'Бавария', 'Боруссия Дортмунд', 'Байер 04', 'РБ Лейпциг', 'Штутгарт',
+                    'Айнтрахт Франкфурт', 'Фрайбург', 'Хоффенхайм', 'Вольфсбург',
+                    'Майнц 05', 'Вердер', 'Аугсбург', 'Унион Берлин',
+                    'Боруссия Мёнхенгладбах', 'Кёльн'
+                ]
+            },
+            {
+                country: 'Франция',
+                league: 'Лига 1',
+                clubs: [
+                    'Пари Сен-Жермен', 'Марсель', 'Лион', 'Монако', 'Лилль',
+                    'Ницца', 'Ланс', 'Ренн', 'Страсбур', 'Тулуза',
+                    'Нант', 'Монпелье', 'Брест', 'Реймс', 'Осер'
+                ]
+            },
+            {
+                country: 'Нидерланды',
+                league: 'Эредивизи',
+                clubs: [
+                    'Аякс', 'ПСВ', 'Фейеноорд', 'АЗ Алкмар', 'Твенте',
+                    'Утрехт', 'Гоу Эхед Иглз', 'НЕК', 'Спарта Роттердам', 'Херенвен',
+                    'Гронинген', 'Фортуна Ситтард', 'Хераклес', 'ПЕК Зволле',
+                    'Виллем II'
+                ]
+            },
+            {
+                country: 'Португалия',
+                league: 'Примейра-лига',
+                clubs: [
+                    'Бенфика', 'Порту', 'Спортинг', 'Брага', 'Витория Гимарайнш',
+                    'Фамаликан', 'Морейренсе', 'Каза Пия', 'Арока', 'Риу Аве',
+                    'Эшторил', 'Боавишта', 'Насьонал', 'Санта-Клара', 'Жил Висенте'
+                ]
+            },
+            {
+                country: 'Бельгия',
+                league: 'Про-лига',
+                clubs: [
+                    'Брюгге', 'Андерлехт', 'Генк', 'Гент', 'Антверпен',
+                    'Юнион Сент-Жиллуаз', 'Стандард', 'Мехелен', 'Шарлеруа',
+                    'Серкль Брюгге', 'Вестерло', 'Ауд-Хеверле Лёвен',
+                    'Синт-Трёйден', 'Кортрейк', 'Зюлте-Варегем'
+                ]
+            },
+            {
+                country: 'Турция',
+                league: 'Суперлига',
+                clubs: [
+                    'Галатасарай', 'Фенербахче', 'Бешикташ', 'Трабзонспор',
+                    'Истанбул Башакшехир', 'Адана Демирспор', 'Сивасспор', 'Ризеспор',
+                    'Касымпаша', 'Аланьяспор', 'Коньяспор', 'Газиантеп', 'Кайсериспор',
+                    'Антальяспор', 'Гёзтепе'
+                ]
+            },
+            {
+                country: 'Чехия',
+                league: 'Первая лига',
+                clubs: [
+                    'Славия Прага', 'Спарта Прага', 'Виктория Пльзень', 'Баник Острава',
+                    'Млада-Болеслав', 'Слован Либерец', 'Сигма Оломоуц', 'Яблонец',
+                    'Богемианс 1905', 'Теплице', 'Словацко', 'Пардубице', 'Карвина',
+                    'Дукла Прага', 'Градец-Кралове'
+                ]
+            }
+        ];
+
+
+        const playerLeagueSelect = document.getElementById('playerLeague');
+        const playerTeamSelect = document.getElementById('playerTeam');
+        const playerCards = document.getElementById('playerCards');
+        const playerStatus = document.getElementById('playerStatus');
+        const espnApi = window.location.protocol === 'file:'
+            ? 'http://127.0.0.1:8765/api'
+            : '/api';
+        const playerLeagueIndexes = {
+            'eng.1': 0,
+            'ita.1': 1,
+            'esp.1': 2,
+            'ger.1': 3,
+            'fra.1': 4,
+            'ned.1': 5,
+            'por.1': 6,
+            'bel.1': 7,
+            'tur.1': 8,
+            'cze.1': 9
+        };
+
+
+        function setPlayerStatus(message) {
+            playerStatus.textContent = message;
+        }
+
+
+        function replaceSelectOptions(select, placeholder, items) {
+            select.replaceChildren();
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = placeholder;
+            select.appendChild(defaultOption);
+
+            items.forEach(({ value, label }) => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = label;
+                select.appendChild(option);
+            });
+        }
+
+
+        async function loadPlayerTeams() {
+            const leagueId = playerLeagueSelect.value;
+            playerCards.replaceChildren();
+
+            if (!leagueId) {
+                playerTeamSelect.disabled = true;
+                replaceSelectOptions(playerTeamSelect, 'Сначала выберите лигу', []);
+                setPlayerStatus('Выберите лигу и клуб, чтобы посмотреть состав сезона 2026/27.');
+                return;
+            }
+
+            const localLeague = clubLeagues[playerLeagueIndexes[leagueId]];
+            const localTeams = (localLeague?.clubs || []).map((clubName, index) => ({
+                value: `local:${index}`,
+                label: clubName
+            }));
+            replaceSelectOptions(playerTeamSelect, 'Выберите клуб', localTeams);
+            playerTeamSelect.disabled = localTeams.length === 0;
+            setPlayerStatus('Загружаем список клубов...');
+            try {
+                const response = await fetch(`${espnApi}/${leagueId}/teams?limit=1000`);
+                if (!response.ok) {
+                    throw new Error('Не удалось загрузить список клубов.');
+                }
+
+                const data = await response.json();
+                const league = data.sports?.flatMap(sport => sport.leagues || [])
+                    .find(item => item.slug === leagueId);
+                const teams = (league?.teams || []).map(({ team }) => ({
+                    value: team.id,
+                    label: team.displayName || team.name
+                }));
+
+                if (teams.length === 0) {
+                    setPlayerStatus(`Источник не вернул клубы. Показан сохраненный список: ${localTeams.length} клубов.`);
+                    return;
+                }
+
+                replaceSelectOptions(playerTeamSelect, 'Выберите клуб', teams);
+                playerTeamSelect.disabled = false;
+                playerTeamSelect.value = teams[0].value;
+                setPlayerStatus(`Клубов в списке: ${teams.length}. Выберите команду, чтобы увидеть ее состав.`);
+                loadPlayerRoster();
+            } catch (error) {
+                replaceSelectOptions(playerTeamSelect, 'Выберите клуб', localTeams);
+                playerTeamSelect.disabled = localTeams.length === 0;
+                setPlayerStatus(`Локальный API не запущен. Запустите start-site.bat и обновите страницу. Пока показан список из ${localTeams.length} клубов.`);
+            }
+        }
+
+
+        async function loadPlayerRoster() {
+            const leagueId = playerLeagueSelect.value;
+            const teamId = playerTeamSelect.value;
+            playerCards.replaceChildren();
+
+            if (!leagueId || !teamId) {
+                return;
+            }
+
+            if (teamId.startsWith('local:')) {
+                const clubName = playerTeamSelect.selectedOptions[0].textContent;
+                const searchQuery = `${clubName} официальный состав футболистов 2026/27`;
+                const link = document.createElement('a');
+                link.className = 'squad-link';
+                link.href = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = `Найти состав клуба ${clubName} на сезон 2026/27`;
+                playerCards.appendChild(link);
+                setPlayerStatus('Составы API недоступны в этом браузере. Откройте поиск состава клуба:');
+                return;
+            }
+
+            setPlayerStatus('Загружаем состав клуба...');
+            try {
+                const response = await fetch(`${espnApi}/${leagueId}/teams/${teamId}/roster`);
+                if (!response.ok) {
+                    throw new Error('Не удалось загрузить состав клуба.');
+                }
+
+                const data = await response.json();
+                const athletes = data.athletes || [];
+                const fragment = document.createDocumentFragment();
+
+                athletes.forEach(player => {
+                    const card = document.createElement('article');
+                    card.className = 'card player-card';
+
+                    const name = document.createElement('h3');
+                    name.textContent = player.displayName || player.fullName;
+                    card.appendChild(name);
+
+                    const details = document.createElement('p');
+                    details.textContent = [player.position?.displayName, player.jersey ? `№ ${player.jersey}` : '']
+                        .filter(Boolean)
+                        .join(' • ');
+                    card.appendChild(details);
+                    fragment.appendChild(card);
+                });
+
+                playerCards.appendChild(fragment);
+                setPlayerStatus(athletes.length
+                    ? `${data.team?.displayName || playerTeamSelect.selectedOptions[0].textContent}: ${athletes.length} футболистов, сезон ${data.season?.displayName || '2026/27'}.`
+                    : 'В источнике пока нет игроков для этого клуба.');
+            } catch (error) {
+                setPlayerStatus('Не удалось загрузить состав. Запустите start-site.bat, проверьте интернет и обновите страницу.');
+            }
+        }
+
+
+        playerLeagueSelect.addEventListener('change', loadPlayerTeams);
+        playerTeamSelect.addEventListener('change', loadPlayerRoster);
+
+
+        function renderClubLeagues() {
+            const container = document.getElementById('clubLeagues');
+            const fragment = document.createDocumentFragment();
+
+
+            clubLeagues.forEach(({ country, league, clubs }) => {
+                const group = document.createElement('div');
+                group.className = 'league-group';
+                group.dataset.country = country;
+
+
+                const heading = document.createElement('h2');
+                heading.className = 'league-title';
+                heading.textContent = `${league} — ${country}`;
+                group.appendChild(heading);
+
+
+                const grid = document.createElement('div');
+                grid.className = 'cards-grid';
+
+
+                clubs.forEach(clubName => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+
+                    const title = document.createElement('h3');
+                    title.textContent = clubName;
+                    card.appendChild(title);
+
+
+                    const leagueLabel = document.createElement('p');
+                    leagueLabel.textContent = `${league} • ${country}`;
+                    card.appendChild(leagueLabel);
+
+
+                    const hint = document.createElement('span');
+                    hint.className = 'click-hint';
+                    hint.textContent = 'Открыть информацию →';
+                    card.appendChild(hint);
+
+
+                    card.addEventListener('click', () => {
+                        openClubModal(
+                            clubName,
+                            country,
+                            `Лига: ${league}`,
+                            `${clubName} — футбольный клуб из страны ${country}, выступающий в лиге ${league}.`
+                        );
+                    });
+                    makeCardKeyboardAccessible(card);
+
+
+                    grid.appendChild(card);
+                });
+
+
+                group.appendChild(grid);
+                fragment.appendChild(group);
+            });
+
+
+            container.appendChild(fragment);
+        }
+
+        function renderClubCountryFilters() {
+            const container = document.getElementById('clubCountryFilters');
+            const fragment = document.createDocumentFragment();
+
+            clubLeagues.forEach(({ country }) => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'clubCountry';
+                checkbox.value = country;
+                label.append(checkbox, document.createTextNode(` ${country}`));
+                fragment.appendChild(label);
+            });
+
+            container.appendChild(fragment);
+        }
+
+        function applyClubFilter() {
+            const selectedCountries = new Set(
+                Array.from(document.querySelectorAll('input[name="clubCountry"]:checked'))
+                    .map(checkbox => checkbox.value)
+            );
+
+            document.querySelectorAll('#clubLeagues .league-group').forEach(group => {
+                group.style.display = selectedCountries.size === 0 || selectedCountries.has(group.dataset.country)
+                    ? ''
+                    : 'none';
+            });
+
+            document.getElementById('clubFilterStatus').textContent = selectedCountries.size === 0
+                ? 'Показаны все страны.'
+                : `Показано стран: ${selectedCountries.size} из ${clubLeagues.length}.`;
+        }
+
+
+        function renderTournamentLeagues() {
+            const leagueCards = document.getElementById('tournamentLeagueCards');
+            const clubCards = document.getElementById('tournamentClubCards');
+            const leagueList = document.getElementById('tournamentLeagueList');
+            const clubList = document.getElementById('tournamentClubList');
+            const selectedLeagueTitle = document.getElementById('selectedLeagueTitle');
+
+
+            clubLeagues.forEach(leagueData => {
+                const leagueCard = document.createElement('div');
+                leagueCard.className = 'card';
+
+
+                const title = document.createElement('h3');
+                title.textContent = leagueData.league;
+                leagueCard.appendChild(title);
+
+
+                const country = document.createElement('p');
+                country.textContent = leagueData.country;
+                leagueCard.appendChild(country);
+
+
+                const hint = document.createElement('span');
+                hint.className = 'click-hint';
+                hint.textContent = 'Посмотреть клубы →';
+                leagueCard.appendChild(hint);
+
+
+                leagueCard.addEventListener('click', () => {
+                    selectedLeagueTitle.textContent = `${leagueData.league} — ${leagueData.country}`;
+                    clubCards.replaceChildren();
+
+
+                    leagueData.clubs.forEach(clubName => {
+                        const clubCard = document.createElement('div');
+                        clubCard.className = 'card';
+
+
+                        const clubTitle = document.createElement('h3');
+                        clubTitle.textContent = clubName;
+                        clubCard.appendChild(clubTitle);
+
+
+                        const leagueLabel = document.createElement('p');
+                        leagueLabel.textContent = `${leagueData.league} • ${leagueData.country}`;
+                        clubCard.appendChild(leagueLabel);
+
+
+                        const hint = document.createElement('span');
+                        hint.className = 'click-hint';
+                        hint.textContent = 'Информация и состав →';
+                        clubCard.appendChild(hint);
+
+
+                        clubCard.addEventListener('click', () => {
+                            const searchQuery = `${clubName} ${leagueData.league} official squad 2026/27`;
+                            const squadUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                            openClubModal(
+                                clubName,
+                                leagueData.country,
+                                `Лига: ${leagueData.league}`,
+                                `${clubName} выступает в лиге ${leagueData.league}. Составы на сезон 2026/27 смотрите на официальном сайте клуба.`,
+                                squadUrl
+                            );
+                        });
+                        makeCardKeyboardAccessible(clubCard);
+
+
+                        clubCards.appendChild(clubCard);
+                    });
+
+
+                    leagueList.hidden = true;
+                    clubList.hidden = false;
+                });
+
+                makeCardKeyboardAccessible(leagueCard);
+                leagueCards.appendChild(leagueCard);
+            });
+
+
+            document.getElementById('backToLeagues').addEventListener('click', () => {
+                clubList.hidden = true;
+                leagueList.hidden = false;
+            });
+        }
+
+
+        renderClubCountryFilters();
+        renderClubLeagues();
+        document.getElementById('applyClubFilter').addEventListener('click', applyClubFilter);
+        document.getElementById('resetClubFilter').addEventListener('click', () => {
+            document.querySelectorAll('input[name="clubCountry"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            applyClubFilter();
+        });
+        renderTournamentLeagues();
+        document.querySelectorAll('.card[onclick]').forEach(makeCardKeyboardAccessible);
+        showSection('home');
+
+
+        // Поиск
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const primaryNav = document.getElementById('primaryNav');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = primaryNav.classList.toggle('is-open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+        });
+
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const noResults = document.getElementById('no-results');
+            let matchesFound = false;
+
+
+            if (query === '') {
+                showSection('home');
+                return;
+            }
+
+
+            document.querySelectorAll('.page-section').forEach(section => {
+                let sectionHasMatches = false;
+                if (section.id === 'clubs') {
+                    section.querySelectorAll('.league-group').forEach(group => {
+                        group.style.display = '';
+                    });
+                }
+                section.querySelectorAll('.card, .feature-card').forEach(card => {
+                    const matches = card.textContent.toLowerCase().includes(query);
+                    card.style.display = matches ? '' : 'none';
+                    sectionHasMatches = sectionHasMatches || matches;
+                });
+                if (section.id === 'clubs') {
+                    section.querySelectorAll('.league-group').forEach(group => {
+                        const hasVisibleCard = Array.from(group.querySelectorAll('.card'))
+                            .some(card => card.style.display !== 'none');
+                        group.style.display = hasVisibleCard ? '' : 'none';
+                    });
+                }
+                section.classList.toggle('active', sectionHasMatches);
+                matchesFound = matchesFound || sectionHasMatches;
+            });
+
+
+            noResults.style.display = matchesFound ? 'none' : 'block';
+        }
+
+
+        searchInput.addEventListener('keyup', performSearch);
+        searchBtn.addEventListener('click', performSearch);
+
+
+        // Кнопка наверх
+        const mybutton = document.getElementById("backToTop");
+        window.onscroll = function() {
+            mybutton.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "flex" : "none";
+        };
+
+
+        function topFunction() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+    
+</body>
+</html>

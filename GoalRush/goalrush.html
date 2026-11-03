@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoaLRush</title>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        
+
+        /* Шапка */
+        header {
+           background-image: url('9098.jfif');
+            background-size: cover;
+            background-position: center calc(50% + var(--header-parallax-offset, 0px));
+            font-family:'Comic Sans MS', cursive;
+            padding: 20px;
+            text-align: center;
+            border:none;
+            position: fixed;
+            top: 0;
+            left:0;
+            width:100%;
+            z-index: 1000;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('211.jfif');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #5c180c;
+        }
+
+        .search {
+            margin-top: 20px;
+        }
+
+        .search input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search button:hover {
+            background-color: #7a2010;
+        }
+
+        main {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 500px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .league-group {
+            margin-bottom: 35px;
+        }
+
+        .league-title {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .back-button {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 16px;
+            background-color: #5c180c;
+            color: #fff;
+            border: 0;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .squad-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+        .player-photo {
+            width: 90px !important;
+            height: 90px !important;
+            object-fit: cover;
+            border-radius: 50% !important;
+        }
+
+        .players-note,
+        .players-status {
+            text-align: center;
+            color: #2b0a03;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 0 auto 20px;
+        }
+
+        /* Сетка карточек */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+            color: #2b0a03;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .imgsocial {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+        }
+
+        .click-hint {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #5c180c;
+            font-weight: bold;
+        }
+
+        /* Всплывающее окно (Modal) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #5c180c;
+        }
+
+        .modal-title {
+            color: #2b0a03;
+            margin-top: 0;
+            border-bottom: 2px solid #5c180c;
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        #no-results {
+            display: none;
+            text-align: center;
+            font-size: 18px;
+            color: #fff;
+            background: rgba(0,0,0,0.6);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #5c180c;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #2b0a03;
+            color: #fff;
+            text-align: center;
+            padding: 30px 15px 15px;
+            margin-top: 40px;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            margin-left: -50vw;
+            margin-bottom: -30px;
+            box-sizing: border-box;
+        }
+
+        .subscription-form input[type="email"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .subscription-form button {
+            padding: 10px 20px;
+            background-color: #5c180c;
+            color: #FFF;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .map-frame {
+            display: block;
+            width: min(100%, 600px);
+            height: 350px;
+            margin: 15px auto;
+            border: 0;
+            border-radius: 8px;
+        }
+
+        .footer-copyright {
+            border-top: 1px solid #5c180c;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="top">
+        <a class="logo" onclick="showSection('home')">GoaLRush</a>
+        <nav>
+            <ul>
+                <li><a class="nav-link active" onclick="showSection('home')">Главная</a></li>
+                <li><a class="nav-link" onclick="showSection('clubs')">Футбольные Клубы</a></li>
+                <li><a class="nav-link" onclick="showSection('transfers')">Трансферы</a></li>
+                <li><a class="nav-link" onclick="showSection('tournaments')">Чемпионаты</a></li>
+                <li><a class="nav-link" onclick="showSection('players')">Футболисты</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Поиск информации...">
+            <button id="searchBtn" type="button">Найти</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- СЕКЦИЯ: Главная -->
+        <section id="home" class="page-section active">
+            <h1 class="section-title">Добро пожаловать на GoaLRush</h1>
+            <div class="cards-grid">
+                <div class="card" onclick="showSection('clubs')">
+                    <img src="i.webp" alt="Клубы">
+                    <h3>Футбольные Клубы</h3>
+                    <p>Обзоры и новости лучших клубов мира.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('transfers')">
+                    <img src="1images.jfif" alt="Трансферы">
+                    <h3>Трансферы</h3>
+                    <p>Свежие слухи и громкие переходы.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('tournaments')">
+                    <img src="01683078.webp" alt="Чемпионаты">
+                    <h3>Чемпионаты</h3>
+                    <p>Результаты и таблицы топовых лиг Европы.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+                <div class="card" onclick="showSection('players')">
+                    <img src="2images.jfif" alt="Футболисты">
+                    <h3>Футболисты</h3>
+                    <p>Статистика и достижения звезд футбола.</p>
+                    <span class="click-hint">Перейти &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Футбольные Клубы -->
+        <section id="clubs" class="page-section">
+            <h1 class="section-title">Футбольные Клубы</h1>
+            <div id="clubLeagues"></div>
+        </section>
+
+        <!-- СЕКЦИЯ: Трансферы -->
+        <section id="transfers" class="page-section">
+            <h1 class="section-title">Последние Трансферы</h1>
+            <div class="cards-grid">
+                <div class="card" onclick="openClubModal('Ферран Торрес', 'Барселона -> ПСЖ', 'Официально', 'Испанский вингер официально сменил клубную прописку и перешел в ПСЖ.')">
+                    <h3>Ферран Торрес</h3>
+                    <p>Перешел в ПСЖ</p>
+                    <span class="click-hint">Детали трансфера &rarr;</span>
+                </div>
+                <div class="card" onclick="openClubModal('Мохаммед Салах', 'Ливерпуль', 'Слухи', 'Саудовские клубы готовят крупное предложение по форварду.')">
+                    <h3>Мохаммед Салах</h3>
+                    <p>Слухи в Саудовскую Аравию</p>
+                    <span class="click-hint">Детали трансфера &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Чемпионаты -->
+        <section id="tournaments" class="page-section">
+            <h1 class="section-title">Чемпионаты</h1>
+            <div id="tournamentLeagueList">
+                <div class="cards-grid" id="tournamentLeagueCards"></div>
+            </div>
+            <div id="tournamentClubList" hidden>
+                <button class="back-button" id="backToLeagues" type="button">← Все лиги</button>
+                <h2 class="league-title" id="selectedLeagueTitle"></h2>
+                <div class="cards-grid" id="tournamentClubCards"></div>
+            </div>
+            <div class="cards-grid">
+                <div class="card" onclick="openClubModal('Лига Чемпионов УЕФА', 'Европа', 'Новый формат', 'Главный клубный турнир Европы с обновленным швейцарским форматом.')">
+                    <h3>Лига Чемпионов</h3>
+                    <p>Главный турнир Европы</p>
+                    <span class="click-hint">О турнире &rarr;</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: Футболисты -->
+        <section id="players" class="page-section">
+            <h1 class="section-title">Футболисты</h1>
+            <p class="players-note">
+                Выберите лигу, затем клуб, чтобы загрузить полный состав, номера, позиции, возраст и фото игроков.
+                Составы загружаются через API-Football и могут обновляться в течение сезона.
+            </p>
+            <div id="playerLeagueList">
+                <div class="cards-grid" id="playerLeagueCards"></div>
+            </div>
+            <div id="playerTeamList" hidden>
+                <button class="back-button" id="backToPlayerLeagues" type="button">← Все лиги</button>
+                <h2 class="league-title" id="selectedPlayerLeagueTitle"></h2>
+                <p class="players-status" id="playerTeamsStatus" role="status"></p>
+                <div class="cards-grid" id="playerTeamCards"></div>
+            </div>
+            <div id="playerSquadList" hidden>
+                <button class="back-button" id="backToPlayerTeams" type="button">← Все клубы лиги</button>
+                <h2 class="league-title" id="selectedPlayerTeamTitle"></h2>
+                <p class="players-status" id="playerSquadStatus" role="status"></p>
+                <div class="cards-grid" id="playerCards"></div>
+            </div>
+        </section>
+
+        <div id="no-results">По вашему запросу ничего не найдено</div>
+    </main>
+
+    <footer>
+        <div class="subscription-form">
+            <p><strong>Все свежие новости всегда у нас:</strong></p>
+            <p><strong>Следите за нашими новостями:</strong></p>
+            <form onsubmit="event.preventDefault();">
+                <input type="email" placeholder="Введите ваш email" required>
+                <button type="submit">Подписаться</button>
+            </form>
+        </div>
+        <iframe
+            class="map-frame"
+            title="Карта Google Maps"
+            src="https://maps.google.com/maps?q=43.237909525416015%2C76.940123048329&amp;z=15&amp;output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+        </iframe>
+        <p><strong>Number: -87472306823</strong></p>
+
+        <div class="social-links">
+            <a class="imgsocial" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="858.png" alt="YouTube">
+            </a>
+            <a class="imgsocial" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="3322.jfif" alt="Instagram">
+            </a>
+            <a class="imgsocial" href="https://web.telegram.org/a/" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="3223.jfif" alt="Telegram">
+            </a>
+            <a class="imgsocial" href="https://api.whatsapp.com/send?phone=87472306823" target="_blank" rel="noopener noreferrer">
+                <img class="imgsocial" src="233.png" alt="WhatsApp">
+            </a>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 GoaLRush. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКОШКО -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" class="modal-title">Заголовок</h2>
+            <div id="modalBody" class="modal-body">Текст...</div>
+        </div>
+    </div>
+
+    <button id="backToTop" title="Наверх" onclick="topFunction()">&#8679;</button>
+
+    <script>
+        // Функция открывания плашек без ошибок с кавычками
+        function openClubModal(title, country, stadium, description, squadUrl) {
+            document.getElementById('modalTitle').innerText = title;
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = '';
+
+            [
+                ['Страна / Клуб:', country],
+                ['Стадион / Статус:', stadium],
+                ['Описание:', description]
+            ].forEach(([label, value]) => {
+                const paragraph = document.createElement('p');
+                const strong = document.createElement('strong');
+                strong.textContent = `${label} `;
+                paragraph.append(strong, document.createTextNode(value));
+                modalBody.appendChild(paragraph);
+            });
+
+            if (squadUrl) {
+                const link = document.createElement('a');
+                link.className = 'squad-link';
+                link.href = squadUrl;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Найти состав сезона 2026/27 (выберите официальный сайт клуба)';
+                modalBody.appendChild(link);
+            }
+
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // Переключение меню
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.page-section');
+            const targetSection = document.getElementById(sectionId);
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            if (!targetSection || !targetSection.classList.contains('page-section')) {
+                return;
+            }
+
+            sections.forEach(section => {
+                section.classList.toggle('active', section === targetSection);
+                section.querySelectorAll('.card').forEach(card => {
+                    card.style.display = '';
+                });
+            });
+
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('onclick') === `showSection('${sectionId}')`);
+            });
+
+            document.getElementById('searchInput').value = '';
+            document.getElementById('no-results').style.display = 'none';
+            if (sectionId === 'tournaments') {
+                document.getElementById('tournamentClubList').hidden = true;
+                document.getElementById('tournamentLeagueList').hidden = false;
+            }
+            if (sectionId === 'players') {
+                document.getElementById('playerSquadList').hidden = true;
+                document.getElementById('playerTeamList').hidden = true;
+                document.getElementById('playerLeagueList').hidden = false;
+            }
+            closeModal();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const clubLeagues = [
+            {
+                country: 'Англия',
+                league: 'Премьер-лига',
+                apiLeagueId: 39,
+                clubs: [
+                    'Манчестер Сити', 'Арсенал', 'Ливерпуль', 'Манчестер Юнайтед', 'Челси',
+                    'Тоттенхэм', 'Ньюкасл Юнайтед', 'Астон Вилла', 'Вест Хэм Юнайтед',
+                    'Брайтон', 'Эвертон', 'Брентфорд', 'Фулхэм', 'Кристал Пэлас',
+                    'Ноттингем Форест'
+                ]
+            },
+            {
+                country: 'Италия',
+                league: 'Серия А',
+                apiLeagueId: 135,
+                clubs: [
+                    'Интер', 'Милан', 'Ювентус', 'Наполи', 'Рома',
+                    'Лацио', 'Аталанта', 'Фиорентина', 'Болонья', 'Торино',
+                    'Удинезе', 'Дженоа', 'Сассуоло', 'Парма', 'Комо'
+                ]
+            },
+            {
+                country: 'Испания',
+                league: 'Ла Лига',
+                apiLeagueId: 140,
+                clubs: [
+                    'Реал Мадрид', 'Барселона', 'Атлетико Мадрид', 'Атлетик Бильбао',
+                    'Реал Сосьедад', 'Вильярреал', 'Реал Бетис', 'Севилья', 'Валенсия',
+                    'Жирона', 'Хетафе', 'Осасуна', 'Сельта', 'Эспаньол', 'Райо Вальекано'
+                ]
+            },
+            {
+                country: 'Германия',
+                league: 'Бундеслига',
+                apiLeagueId: 78,
+                clubs: [
+                    'Бавария', 'Боруссия Дортмунд', 'Байер 04', 'РБ Лейпциг', 'Штутгарт',
+                    'Айнтрахт Франкфурт', 'Фрайбург', 'Хоффенхайм', 'Вольфсбург',
+                    'Майнц 05', 'Вердер', 'Аугсбург', 'Унион Берлин',
+                    'Боруссия Мёнхенгладбах', 'Кёльн'
+                ]
+            },
+            {
+                country: 'Франция',
+                league: 'Лига 1',
+                apiLeagueId: 61,
+                clubs: [
+                    'Пари Сен-Жермен', 'Марсель', 'Лион', 'Монако', 'Лилль',
+                    'Ницца', 'Ланс', 'Ренн', 'Страсбур', 'Тулуза',
+                    'Нант', 'Монпелье', 'Брест', 'Реймс', 'Осер'
+                ]
+            },
+            {
+                country: 'Нидерланды',
+                league: 'Эредивизи',
+                apiLeagueId: 88,
+                clubs: [
+                    'Аякс', 'ПСВ', 'Фейеноорд', 'АЗ Алкмар', 'Твенте',
+                    'Утрехт', 'Гоу Эхед Иглз', 'НЕК', 'Спарта Роттердам', 'Херенвен',
+                    'Гронинген', 'Фортуна Ситтард', 'Хераклес', 'ПЕК Зволле',
+                    'Виллем II'
+                ]
+            },
+            {
+                country: 'Португалия',
+                league: 'Примейра-лига',
+                apiLeagueId: 94,
+                clubs: [
+                    'Бенфика', 'Порту', 'Спортинг', 'Брага', 'Витория Гимарайнш',
+                    'Фамаликан', 'Морейренсе', 'Каза Пия', 'Арока', 'Риу Аве',
+                    'Эшторил', 'Боавишта', 'Насьонал', 'Санта-Клара', 'Жил Висенте'
+                ]
+            },
+            {
+                country: 'Бельгия',
+                league: 'Про-лига',
+                apiLeagueId: 144,
+                clubs: [
+                    'Брюгге', 'Андерлехт', 'Генк', 'Гент', 'Антверпен',
+                    'Юнион Сент-Жиллуаз', 'Стандард', 'Мехелен', 'Шарлеруа',
+                    'Серкль Брюгге', 'Вестерло', 'Ауд-Хеверле Лёвен',
+                    'Синт-Трёйден', 'Кортрейк', 'Зюлте-Варегем'
+                ]
+            },
+            {
+                country: 'Турция',
+                league: 'Суперлига',
+                apiLeagueId: 203,
+                clubs: [
+                    'Галатасарай', 'Фенербахче', 'Бешикташ', 'Трабзонспор',
+                    'Истанбул Башакшехир', 'Адана Демирспор', 'Сивасспор', 'Ризеспор',
+                    'Касымпаша', 'Аланьяспор', 'Коньяспор', 'Газиантеп', 'Кайсериспор',
+                    'Антальяспор', 'Гёзтепе'
+                ]
+            },
+            {
+                country: 'Чехия',
+                league: 'Первая лига',
+                apiLeagueId: 345,
+                clubs: [
+                    'Славия Прага', 'Спарта Прага', 'Виктория Пльзень', 'Баник Острава',
+                    'Млада-Болеслав', 'Слован Либерец', 'Сигма Оломоуц', 'Яблонец',
+                    'Богемианс 1905', 'Теплице', 'Словацко', 'Пардубице', 'Карвина',
+                    'Дукла Прага', 'Градец-Кралове'
+                ]
+            }
+        ];
+
+        function renderClubLeagues() {
+            const container = document.getElementById('clubLeagues');
+            const fragment = document.createDocumentFragment();
+
+            clubLeagues.forEach(({ country, league, clubs }) => {
+                const group = document.createElement('div');
+                group.className = 'league-group';
+
+                const heading = document.createElement('h2');
+                heading.className = 'league-title';
+                heading.textContent = `${league} — ${country}`;
+                group.appendChild(heading);
+
+                const grid = document.createElement('div');
+                grid.className = 'cards-grid';
+
+                clubs.forEach(clubName => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    const title = document.createElement('h3');
+                    title.textContent = clubName;
+                    card.appendChild(title);
+
+                    const leagueLabel = document.createElement('p');
+                    leagueLabel.textContent = `${league} • ${country}`;
+                    card.appendChild(leagueLabel);
+
+                    const hint = document.createElement('span');
+                    hint.className = 'click-hint';
+                    hint.textContent = 'Открыть информацию →';
+                    card.appendChild(hint);
+
+                    card.addEventListener('click', () => {
+                        openClubModal(
+                            clubName,
+                            country,
+                            `Лига: ${league}`,
+                            `${clubName} — футбольный клуб из страны ${country}, выступающий в лиге ${league}.`
+                        );
+                    });
+
+                    grid.appendChild(card);
+                });
+
+                group.appendChild(grid);
+                fragment.appendChild(group);
+            });
+
+            container.appendChild(fragment);
+        }
+
+        function renderTournamentLeagues() {
+            const leagueCards = document.getElementById('tournamentLeagueCards');
+            const clubCards = document.getElementById('tournamentClubCards');
+            const leagueList = document.getElementById('tournamentLeagueList');
+            const clubList = document.getElementById('tournamentClubList');
+            const selectedLeagueTitle = document.getElementById('selectedLeagueTitle');
+
+            clubLeagues.forEach(leagueData => {
+                const leagueCard = document.createElement('div');
+                leagueCard.className = 'card';
+
+                const title = document.createElement('h3');
+                title.textContent = leagueData.league;
+                leagueCard.appendChild(title);
+
+                const country = document.createElement('p');
+                country.textContent = leagueData.country;
+                leagueCard.appendChild(country);
+
+                const hint = document.createElement('span');
+                hint.className = 'click-hint';
+                hint.textContent = 'Посмотреть клубы →';
+                leagueCard.appendChild(hint);
+
+                leagueCard.addEventListener('click', () => {
+                    selectedLeagueTitle.textContent = `${leagueData.league} — ${leagueData.country}`;
+                    clubCards.replaceChildren();
+
+                    leagueData.clubs.forEach(clubName => {
+                        const clubCard = document.createElement('div');
+                        clubCard.className = 'card';
+
+                        const clubTitle = document.createElement('h3');
+                        clubTitle.textContent = clubName;
+                        clubCard.appendChild(clubTitle);
+
+                        const leagueLabel = document.createElement('p');
+                        leagueLabel.textContent = `${leagueData.league} • ${leagueData.country}`;
+                        clubCard.appendChild(leagueLabel);
+
+                        const hint = document.createElement('span');
+                        hint.className = 'click-hint';
+                        hint.textContent = 'Информация и состав →';
+                        clubCard.appendChild(hint);
+
+                        clubCard.addEventListener('click', () => {
+                            const searchQuery = `${clubName} ${leagueData.league} official squad 2026/27`;
+                            const squadUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                            openClubModal(
+                                clubName,
+                                leagueData.country,
+                                `Лига: ${leagueData.league}`,
+                                `${clubName} выступает в лиге ${leagueData.league}. Составы на сезон 2026/27 смотрите на официальном сайте клуба.`,
+                                squadUrl
+                            );
+                        });
+
+                        clubCards.appendChild(clubCard);
+                    });
+
+                    leagueList.hidden = true;
+                    clubList.hidden = false;
+                });
+
+                leagueCards.appendChild(leagueCard);
+            });
+
+            document.getElementById('backToLeagues').addEventListener('click', () => {
+                clubList.hidden = true;
+                leagueList.hidden = false;
+            });
+        }
+
+        async function requestRosterApi(endpoint) {
+            const response = await fetch(endpoint);
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Не удалось получить данные API-Football.');
+            }
+            return data;
+        }
+
+        function showPlayerScreen(screen) {
+            document.getElementById('playerLeagueList').hidden = screen !== 'leagues';
+            document.getElementById('playerTeamList').hidden = screen !== 'teams';
+            document.getElementById('playerSquadList').hidden = screen !== 'squad';
+        }
+
+        function renderPlayerLeagues() {
+            const leagueCards = document.getElementById('playerLeagueCards');
+            const teamCards = document.getElementById('playerTeamCards');
+            const playerCards = document.getElementById('playerCards');
+            const teamsStatus = document.getElementById('playerTeamsStatus');
+            const squadStatus = document.getElementById('playerSquadStatus');
+
+            clubLeagues.forEach(leagueData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const title = document.createElement('h3');
+                title.textContent = leagueData.league;
+                card.appendChild(title);
+
+                const country = document.createElement('p');
+                country.textContent = leagueData.country;
+                card.appendChild(country);
+
+                const hint = document.createElement('span');
+                hint.className = 'click-hint';
+                hint.textContent = 'Загрузить клубы и составы →';
+                card.appendChild(hint);
+
+                card.addEventListener('click', async () => {
+                    showPlayerScreen('teams');
+                    document.getElementById('selectedPlayerLeagueTitle').textContent =
+                        `${leagueData.league} — ${leagueData.country}`;
+                    teamsStatus.textContent = 'Загружаю клубы лиги...';
+                    teamCards.replaceChildren();
+
+                    try {
+                        const data = await requestRosterApi(
+                            `/api/teams?leagueId=${leagueData.apiLeagueId}&season=2026`
+                        );
+                        const teams = data.response || [];
+                        if (teams.length === 0) {
+                            teamsStatus.textContent = 'API-Football не вернул клубы для этой лиги и сезона.';
+                            return;
+                        }
+
+                        teamsStatus.textContent = `Клубов: ${teams.length}. Выберите клуб, чтобы загрузить состав.`;
+                        teams.forEach(item => {
+                            const team = item.team;
+                            const teamCard = document.createElement('div');
+                            teamCard.className = 'card';
+
+                            if (team.logo) {
+                                const logo = document.createElement('img');
+                                logo.src = team.logo;
+                                logo.alt = `Эмблема ${team.name}`;
+                                logo.loading = 'lazy';
+                                teamCard.appendChild(logo);
+                            }
+
+                            const teamTitle = document.createElement('h3');
+                            teamTitle.textContent = team.name;
+                            teamCard.appendChild(teamTitle);
+
+                            const hint = document.createElement('span');
+                            hint.className = 'click-hint';
+                            hint.textContent = 'Показать состав →';
+                            teamCard.appendChild(hint);
+
+                            teamCard.addEventListener('click', async () => {
+                                showPlayerScreen('squad');
+                                document.getElementById('selectedPlayerTeamTitle').textContent =
+                                    `${team.name} — ${leagueData.league}`;
+                                squadStatus.textContent = 'Загружаю состав команды...';
+                                playerCards.replaceChildren();
+
+                                try {
+                                    const squadData = await requestRosterApi(`/api/squad?teamId=${team.id}`);
+                                    const squad = squadData.response && squadData.response[0];
+                                    const players = squad && squad.players ? squad.players : [];
+
+                                    if (players.length === 0) {
+                                        squadStatus.textContent = 'API-Football не вернул игроков для этого клуба.';
+                                        return;
+                                    }
+
+                                    squadStatus.textContent =
+                                        `Игроков в составе: ${players.length}. Данные состава предоставляет API-Football.`;
+
+                                    players.forEach(player => {
+                                        const playerCard = document.createElement('article');
+                                        playerCard.className = 'card';
+
+                                        if (player.photo) {
+                                            const photo = document.createElement('img');
+                                            photo.className = 'player-photo';
+                                            photo.src = player.photo;
+                                            photo.alt = `Фото ${player.name}`;
+                                            photo.loading = 'lazy';
+                                            playerCard.appendChild(photo);
+                                        }
+
+                                        const playerName = document.createElement('h3');
+                                        playerName.textContent = player.name;
+                                        playerCard.appendChild(playerName);
+
+                                        const details = document.createElement('p');
+                                        const detailsList = [
+                                            player.position && `Позиция: ${player.position}`,
+                                            player.number != null && `Номер: ${player.number}`,
+                                            player.age != null && `Возраст: ${player.age}`
+                                        ].filter(Boolean);
+                                        details.textContent = detailsList.join(' • ') || 'Нет дополнительных данных';
+                                        playerCard.appendChild(details);
+                                        playerCards.appendChild(playerCard);
+                                    });
+                                } catch (error) {
+                                    squadStatus.textContent = error.message;
+                                }
+                            });
+
+                            teamCards.appendChild(teamCard);
+                        });
+                    } catch (error) {
+                        teamsStatus.textContent = error.message;
+                    }
+                });
+
+                leagueCards.appendChild(card);
+            });
+
+            document.getElementById('backToPlayerLeagues').addEventListener('click', () => {
+                showPlayerScreen('leagues');
+            });
+            document.getElementById('backToPlayerTeams').addEventListener('click', () => {
+                showPlayerScreen('teams');
+            });
+        }
+
+        renderClubLeagues();
+        renderTournamentLeagues();
+        renderPlayerLeagues();
+
+        // Поиск
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const noResults = document.getElementById('no-results');
+            const sections = document.querySelectorAll('.page-section');
+
+            if (query === '') {
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === 'home');
+                    section.querySelectorAll('.card').forEach(card => {
+                        card.style.display = '';
+                    });
+                });
+                noResults.style.display = 'none';
+                return;
+            }
+
+            let matchesFound = false;
+            let firstMatchSection = null;
+
+            sections.forEach(section => {
+                let sectionHasMatches = false;
+                const titleText = (section.querySelector('.section-title')?.textContent || '').toLowerCase();
+
+                section.querySelectorAll('.card').forEach(card => {
+                    const matches = card.textContent.toLowerCase().includes(query) || titleText.includes(query);
+                    card.style.display = matches ? '' : 'none';
+                    sectionHasMatches = sectionHasMatches || matches;
+                });
+
+                if (sectionHasMatches && !firstMatchSection) {
+                    firstMatchSection = section;
+                }
+
+                section.classList.toggle('active', sectionHasMatches);
+                matchesFound = matchesFound || sectionHasMatches;
+            });
+
+            if (firstMatchSection) {
+                sections.forEach(section => {
+                    if (section !== firstMatchSection) {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            noResults.style.display = matchesFound ? 'none' : 'block';
+        }
+
+        searchInput.addEventListener('keyup', performSearch);
+        searchBtn.addEventListener('click', performSearch);
+
+        // Кнопка наверх
+        const mybutton = document.getElementById("backToTop");
+        window.onscroll = function() {
+            mybutton.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "flex" : "none";
+        };
+
+        function topFunction() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const siteHeader = document.getElementById('top');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let parallaxFrame = 0;
+
+        function updateHeaderParallax() {
+            if (parallaxFrame || reduceMotion.matches) {
+                return;
+            }
+
+            parallaxFrame = window.requestAnimationFrame(() => {
+                siteHeader.style.setProperty('--header-parallax-offset', `${window.scrollY * -0.2}px`);
+                parallaxFrame = 0;
+            });
+        }
+
+        window.addEventListener('scroll', updateHeaderParallax, { passive: true });
+        updateHeaderParallax();
+    </script>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close"onclick="closeModel()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" src="" alt="">
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+</body>
+</html>
